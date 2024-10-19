@@ -6,6 +6,8 @@ let stepInterval;
 let activeStepInterval = false;
 let speed = 500;
 
+generateBoard();
+
 function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
     boardExists = true;
