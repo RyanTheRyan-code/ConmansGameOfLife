@@ -17,7 +17,7 @@ function generateBoard(width=16, height=16) {
             let space = document.createElement("div");
             space.className = "space state-0";
             space.id = `${i},${j}`;
-            space.onclick = function() { setStateWithElement(this, 1); };
+            space.onclick = function() { setStateWithElement(this, Math.floor(Math.random() * 4)+1); };
             line.append(space);
         }
         board.append(line);
