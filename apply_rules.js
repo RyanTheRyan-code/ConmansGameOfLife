@@ -10,6 +10,17 @@ let currentRules = [ // conways by default
     {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
 ];
 
+function resetRules() {
+    currentRules = [ // conways by default
+        {type: 0, numCells: 2, comparison: 0, neighborState: 1},
+        {type: 1, numCells: 2, comparison: 2, neighborState: 1},
+        {type: 1, numCells: 3, comparison: 2, neighborState: 1},
+        {type: 0, numCells: 3, comparison: 4, neighborState: 1},
+        {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
+    ];
+    console.log(currentRules);
+}
+
 function addRandRule() {
     let type = Math.floor(Math.random()*4);
     switch(type) {
