@@ -248,3 +248,31 @@ function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) 
         }
     }
 }
+
+function ruleParser(rule) {
+    str = "A cell will ";
+
+    if(rule.type == 0) str += "die ";
+    else if(rule.type == 1) str += "stay alive ";
+    else if(rule.type == 2) str += "be born ";
+    else if(rule.type == 3) str += "evolve ";
+    
+    str += "if it neighbors "
+
+    if(rule.comparison == 0) str += "less than ";
+    else if(rule.comparison == 1) str += "at most ";
+    else if(rule.comparison == 2) str += "exactly ";
+    else if(rule.comparison == 3) str += "at least ";
+    else if(rule.comparison == 4) str += "more than ";
+    
+    str += rule.numCells;
+
+    if(rule[neighborState] == 1) str += "yellow ";
+    else if(rule[neighborState] == 2) str += "pink ";
+    else if(rule[neighborState] == 3) str += "green ";
+    else if(rule[neighborState] == 4) str += "blue ";
+
+    str += "neighbors.";
+
+    return str;
+}
