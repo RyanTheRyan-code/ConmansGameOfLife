@@ -8,7 +8,7 @@ let speed = 500;
 
 generateBoard();
 
-function generateBoard(width=64, height=64) {
+function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
     boardExists = true;
 
@@ -45,6 +45,7 @@ function randBoard() {
     for(let i = 0; i < rand; i++) {
         setStateWithPos(Math.floor(Math.random() * board_width),Math.floor(Math.random() * board_height),Math.ceil(Math.random() * 4));
     }
+    if(activeStepInterval) startSteps();
 }
 
 function setStateWithPos(x, y, state) {
@@ -142,7 +143,6 @@ function startSteps() {
     document.getElementById("goButton").style.display = "none";
     document.getElementById("stopButton").style.display = "flex";
     clearInterval(stepInterval);
-    doStep();
     stepInterval = setInterval(() => { doStep() }, speed);
     activeStepInterval = true;
 }
