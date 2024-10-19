@@ -10,6 +10,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
     let max = 0;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
+        console.log(checkAtCoord);
         // console.log(result);
         max = (max > result) ? max : result;
     }
@@ -64,7 +65,7 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
     (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]+1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) == value);
     let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString());
-    console.log(`for coord: (${checkAtCoord}), sum: ${sum}, above: ${above}`);
+    console.log(`for coord: (${checkAtCoord}), sum: ${sum}, above: ${[checkAtCoord[0], checkAtCoord[1]-1].toString()} ${above}`);
     return sum;
 }
 
