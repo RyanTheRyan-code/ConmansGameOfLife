@@ -1,6 +1,8 @@
 const NO_STATE_CHANGE = -1;
 const DEAD_STATE = 0;
 
+
+
 // Any variables with `Map` at the end, are maps.
 // Any variables with `Coord` at the end, are [x,y] arrays.
 // Any variables with `State` at the end, are numbers, representing the states of a cell.
@@ -13,7 +15,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
-        console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
+        // console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
         max = (max > result) ? max : result;
     }
     return max;
@@ -50,8 +52,9 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 // number exactThree(Map, [number, number])
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
-        console.log("unalive");
+        console.log(`come to life at ${checkAtCoord}?`);
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        console.log(`sum ${sum}?`);
         return (sum == 3) ? 1 : DEAD_STATE;
     }
     return NO_STATE_CHANGE;
@@ -59,7 +62,8 @@ let exactThree = function (curStateMap, checkAtCoord) {
 
 // number sumNeighbor(Map, [number, number], number)
 function sumNeighbor(curStateMap, checkAtCoord, value) {
-    let sum = (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]-1].toString()) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]-1].toString()) == value) +
+    let sum = 
+    (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]-1].toString()) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]-1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString()) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]-1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]-1].toString()) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]-1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]].toString()) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]].toString()) == value) +
@@ -67,7 +71,7 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
     (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]+1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]+1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) == value);
-    let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString());
+    // let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString());
     // console.log(`for coord: (${checkAtCoord}), sum: ${sum}, above: ${[checkAtCoord[0], checkAtCoord[1]-1].toString()} ${above}`);
     return sum;
 }
@@ -86,37 +90,36 @@ function step(prevStateMap) {
             let newState = applyRules(prevStateMap, coord);
             stateChange = prevStateMap.get(cstr) != newState;
             updateCoord(cstr, coord, prevStateMap, nextStateMap, nextEmptyMap);
-            // prevStateMap[coord] = newState;
         }
         //if the cell didn't change, we don't need to update the neighbors
         if(stateChange) {
             //look at neighbors
             let c = [coord[0]-1, coord[1]-1];
             let cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0], coord[1]-1];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0]+1, coord[1]-1];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
 
             c = [coord[0]-1, coord[1]];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0]+1, coord[1]];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
 
             c = [coord[0]-1, coord[1]+1];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0], coord[1]+1];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0]+1, coord[1]+1];
             cstr = c.toString();
-            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
+            if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
         }
     });
     return nextStateMap;
