@@ -11,7 +11,8 @@ const DEAD_STATE = 0;
 // returns: number checkAtNewState
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) {
-    let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree, fourToState2, oneToState2, threeS2ToState3];
+    let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive];
+    // let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree, fourToState2, oneToState2, threeS2ToState3];
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
