@@ -5,7 +5,14 @@
 // applyRules should be a function pointer such that:
 // returns: number checkAtNewState
 // params:  Map curStateMap, [number, number] checkAtCoord
-let applyRules = function(curStateMap, checkAtCoord) { return 1; };
+let applyRules = function(curStateMap, checkAtCoord) {
+    let rules = [lessThanTwoAlive, twoOrThreeAlive];
+    let m = 0;
+    for(r in rules) {
+        m = max(m, r(curStateMap, checkAtCoord));
+    }
+    return m;
+};
 
 // number lessThanTwoAlive(Map, [number, number])
 let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
@@ -57,13 +64,14 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
 
 //Map step(Map)
 function step(prevStateMap) {
-    console.log("step");
     let nextStateMap = new Map();
     let nextEmptyMap = new Map();
     prevStateMap.forEach((cellState, coord) => {
         let stateChange = false;
         //we could've already looked at it from its alive neighbors
+        console.log("--looking at a cell");
         if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
+            console.log("--in the if");
             let newState = applyRules(prevStateMap, coord); 
             stateChange = prevStateMap[coord] == newState;
             updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap);
@@ -92,12 +100,15 @@ function step(prevStateMap) {
             updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
         }
     });
+    return nextStateMap;
 }
 
 // void updateCoord([number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
 function updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap) {
+    console.log("--updated");
     if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
         let newState = applyRules(prevStateMap, coord);
+        console.log(newState);
         if(newState == 0) {
             nextEmptyMap[coord] = newState;
         } else if(newState == -1) {
