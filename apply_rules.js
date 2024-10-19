@@ -11,7 +11,7 @@ const DEAD_STATE = 0;
 // returns: number checkAtNewState
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) {
-    let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree];
+    let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree, fourToState2, oneToState2, threeS2ToState3];
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
@@ -52,13 +52,39 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 // number exactThree(Map, [number, number])
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
-        console.log(`come to life at ${checkAtCoord}?`);
+        // console.log(`come to life at ${checkAtCoord}?`);
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        console.log(`sum ${sum}?`);
+        // console.log(`sum ${sum}?`);
         return (sum == 3) ? 1 : DEAD_STATE;
     }
     return NO_STATE_CHANGE;
 }
+
+let fourToState2 = function (curStateMap, checkAtCoord) {
+    if (!curStateMap.has(checkAtCoord.toString())) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        return (sum == 4) ? 2 : DEAD_STATE;
+    }
+    return NO_STATE_CHANGE;
+}
+
+let oneToState2 = function (curStateMap, checkAtCoord) {
+    if (curStateMap.has(checkAtCoord.toString())) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        return (sum == 1) ? 2 : DEAD_STATE;
+    }
+    return DEAD_STATE;
+}
+
+let threeS2ToState3 = function (curStateMap, checkAtCoord) {
+    if (curStateMap.has(checkAtCoord.toString())) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, 2);
+        return (sum >= 3) ? 3 : DEAD_STATE;
+    }
+    return DEAD_STATE;
+}
+
+
 
 // number sumNeighbor(Map, [number, number], number)
 function sumNeighbor(curStateMap, checkAtCoord, value) {
@@ -132,7 +158,7 @@ function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) 
         if(newState == DEAD_STATE) {
             nextEmptyMap.set(coordStr, DEAD_STATE);
         } else if(newState == NO_STATE_CHANGE) {
-            console.log(`no change for ${coordStr}`);
+            // console.log(`no change for ${coordStr}`);
             if(prevStateMap.get(coordStr) == DEAD_STATE) {
                 nextEmptyMap.set(coordStr, DEAD_STATE);
             } else {
