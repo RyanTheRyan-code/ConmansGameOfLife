@@ -1,5 +1,6 @@
 const NO_STATE_CHANGE = -1;
 const DEAD_STATE = 0;
+const PROTECTED = 0.4;
 
 
 
@@ -15,10 +16,10 @@ let applyRules = function(curStateMap, checkAtCoord) {
     // let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree, fourToState2, oneToState2, threeS2ToState3];
     let rules = [
         {type: 0, numCells: 2, comparison: 0, neighborState: 1},
-        // {type: 1, numCells: 2, comparison: 2, neighborState: 1},
-        // {type: 1, numCells: 3, comparison: 2, neighborState: 1},
-        // {type: 0, numCells: 3, comparison: 4, neighborState: 1},
-        // {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1}
+        {type: 1, numCells: 2, comparison: 2, neighborState: 1},
+        {type: 1, numCells: 3, comparison: 2, neighborState: 1},
+        {type: 0, numCells: 3, comparison: 4, neighborState: 1},
+        {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1}
     ]
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
@@ -53,13 +54,13 @@ let generalDead = function(numCells, comparison, neighborState, curStateMap, che
                 return (sum < numCells) ? DEAD_STATE : NO_STATE_CHANGE;
             case 1:
                 return (sum <= numCells) ? DEAD_STATE : NO_STATE_CHANGE;
-            case 2:
+                case 2:
                 return (sum == numCells) ? DEAD_STATE : NO_STATE_CHANGE;
-            case 3:
+                case 3:
                 return (sum >= numCells) ? DEAD_STATE : NO_STATE_CHANGE;
-            case 4:
+                case 4:
                 return (sum > numCells) ? DEAD_STATE : NO_STATE_CHANGE;
-        }
+            }
     }
     return DEAD_STATE;
 }
@@ -67,17 +68,18 @@ let generalDead = function(numCells, comparison, neighborState, curStateMap, che
 let generalStay = function(numCells, comparison, neighborState, curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, neighborState);
+        // console.log(sum);
         switch (comparison) {
             case 0:
-                return (sum < numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+                return (sum < numCells) ? PROTECTED : DEAD_STATE;
             case 1:
-                return (sum <= numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+                return (sum <= numCells) ? PROTECTED : DEAD_STATE;
             case 2:
-                return (sum == numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+                return (sum == numCells) ? PROTECTED : DEAD_STATE;
             case 3:
-                return (sum >= numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+                return (sum >= numCells) ? PROTECTED : DEAD_STATE;
             case 4:
-                return (sum > numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+                return (sum > numCells) ? PROTECTED : DEAD_STATE;
         }
     }
     return DEAD_STATE;
@@ -238,7 +240,7 @@ function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) 
         let newState = applyRules(prevStateMap, coord);
         if(newState == DEAD_STATE) {
             nextEmptyMap.set(coordStr, DEAD_STATE);
-        } else if(newState == NO_STATE_CHANGE) {
+        } else if(newState == NO_STATE_CHANGE || newState == PROTECTED) {
             // console.log(`no change for ${coordStr}`);
             if(prevStateMap.get(coordStr) == DEAD_STATE) {
                 nextEmptyMap.set(coordStr, DEAD_STATE);
