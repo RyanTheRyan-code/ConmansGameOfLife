@@ -127,6 +127,14 @@ function mapDifference(map1, map2) {
 }
 
 function startSteps() {
+    document.getElementById("goButton").style.display = "none";
+    document.getElementById("stopButton").style.display = "flex";
     clearInterval(stepInterval);
+    doStep();
     stepInterval = setInterval(() => { doStep() }, 500);
+}
+function stopSteps() {
+    document.getElementById("stopButton").style.display = "none";
+    document.getElementById("goButton").style.display = "flex";
+    clearInterval(stepInterval);
 }
