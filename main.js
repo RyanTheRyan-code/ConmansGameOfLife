@@ -2,6 +2,7 @@ let boardExists = false;
 let board_height;
 let board_width;
 let alive_cells = new Map(); // Map[x,y] = state
+let stepInterval;
 
 function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
@@ -10,6 +11,7 @@ function generateBoard(width=16, height=16) {
     board_height = height;
     board_width = width;
     alive_cells = new Map(); // Map[x,y] = state
+    clearInterval(stepInterval);
 
     let gameDiv = document.getElementById("game");
     let board = document.createElement("div");
@@ -122,4 +124,9 @@ function mapDifference(map1, map2) {
     }
   
     return diff;
+}
+
+function startSteps() {
+    clearInterval(stepInterval);
+    stepInterval = setInterval(() => { doStep() }, 500);
 }
