@@ -92,7 +92,7 @@ function addMap(map) {
         //coord[0] is x, coord[1] is y
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
-        if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
+        if(value != getSpace(coord[0], coord[1]).className.split("state-")[1] && coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
             setStateVisually(coord[0],coord[1], value);
         }
     });
@@ -102,10 +102,24 @@ function doStep() {
     // console.log("Before:");
     // console.log(alive_cells);
     let new_alive_cells = step(alive_cells);
-    subtractMap(alive_cells);
+    let old_alive_cells = mapDifference(alive_cells, new_alive_cells);
+    subtractMap(old_alive_cells);
     addMap(new_alive_cells);
     alive_cells = new_alive_cells;
     // console.log("After:");
     // console.log(alive_cells);
     // console.log("____________");
+}
+
+function mapDifference(map1, map2) {
+    const diff = new Map();
+  
+    // Check for keys in map1 that are not in map2
+    for (const [key, value] of map1) {
+        if (!map2.has(key) || map2.get(key) !== value) {
+            diff.set(key, value);
+        }
+    }
+  
+    return diff;
 }
