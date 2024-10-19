@@ -1,5 +1,5 @@
 html, head, body {
-    height: 100%;
+    min-height: 100%;
 }
 
 body {
@@ -25,8 +25,8 @@ div {
 }
 
 #game {
-    position: relative;
     justify-content: space-evenly;
+    height: 80vh;
 }
 
 #rulesContainer {
@@ -34,14 +34,13 @@ div {
     flex-direction: column;
 }
 #rules {
-    height: 80vh;
     text-align: center;
-    margin-top: 4px;
-    padding-left: 32px;
-    padding-right: 32px;
-    margin-bottom: 4px;
+    height: 100%;
     flex-direction: column;
     justify-content: flex-start;
+    inline-size: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
     background-color: hsl(197, 20%, 80%);
     color: hsl(var(--hue), var(--saturation), 15%);
     border: 4px solid hsl(var(--hue), var(--saturation), 25%);
@@ -50,10 +49,11 @@ div {
 }
 
 #board {
+    position: relative;
     min-width: 80vh;
     width: 80vh;
     max-width: 80vh;
-    height: 80vh;
+    height: 100%;
     flex-direction: column;
     flex-grow: 1;
 }
@@ -66,4 +66,67 @@ div {
 .space {
     border-radius: 10%;
     margin: 2px;
+}
+
+/* Right */
+.arrow:nth-child(1 of .arrow) {
+    width: 0; 
+    height: 0; 
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    
+    border-left: 20px solid hsl(var(--hue), var(--saturation), 15%);;
+    position:absolute;
+    right: 0%;
+    bottom: 50%;
+    translate: 0 50%;
+}
+/* Left */
+.arrow:nth-child(2 of .arrow) {
+    width: 0; 
+    height: 0; 
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent; 
+    
+    border-right:20px solid hsl(var(--hue), var(--saturation), 15%);; 
+    position:absolute;
+    bottom: 50%;
+    translate: 0 50%;
+}
+/* Up */
+.arrow:nth-child(3 of .arrow) {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    
+    border-bottom: 20px solid hsl(var(--hue), var(--saturation), 15%);;
+    position:absolute;
+    top: 0;
+    right: 50%;
+    translate: 50% 0;
+}
+/* Down */
+.arrow:nth-child(4 of .arrow) {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    
+    border-top: 20px solid hsl(var(--hue), var(--saturation), 15%);;
+    position:absolute;
+    right: 50%;
+    bottom: 0;
+    translate: 50% 0;
+}
+.arrow {
+    transition-duration: 0.2s;
+}
+.arrow:hover {
+    transform: scale(125%);
+    filter: brightness(130%);
+}
+.arrow:active {
+    transform: scale(80%);
+    filter: brightness(95%);
 }
