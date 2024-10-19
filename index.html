@@ -20,12 +20,13 @@
             <div class="button" onclick="doStep()">Step</div>
         </div>
         <div class="buttonContainer">
-            <div class="button" onclick="setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.floor(Math.random() * 4)+1)">Set State</div>
+            <!-- <div class="button" onclick="setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.floor(Math.random() * 4)+1)">Set State</div> -->
+            <div class="button" onclick="setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),1)">Set State</div>
         </div>
     </div>
     <div id="game"></div>
     <script src="main.js"></script>
     <script src="apply_rules.js"></script>
-    <script>setInterval(() => { setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.floor(Math.random() * 4)+1); })</script>
+    <!-- <script>setInterval(() => { setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.floor(Math.random() * 4)+1); })</script> -->
 </body>
 </html>

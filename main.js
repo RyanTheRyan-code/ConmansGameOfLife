@@ -30,13 +30,17 @@ function getAlive() { return alive_cells; }
 
 function setStateWithPos(x, y, state) {
     updateAliveCellsForSetStace(x, y, state);
-
+    console.log(x);
+    console.log(y);
+    
     space = getSpace(x, y);
     setAnimationsForSetState(space, state);
 }
 function setStateWithElement(space, state) {
-    let x = parseInt(space.id.split(','),10);
-    let y = parseInt(space.id.split(','),10);
+    let x = parseInt(space.id.split(',')[0],10);
+    let y = parseInt(space.id.split(',')[1],10);
+    console.log(x);
+    console.log(y);
     updateAliveCellsForSetStace(x, y, state);
     setAnimationsForSetState(space, state);
 }
@@ -96,4 +100,5 @@ function doStep() {
     alive_cells = new_alive_cells;
     console.log("After:");
     console.log(alive_cells);
+    console.log(new_alive_cells);
 }
