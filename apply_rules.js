@@ -6,7 +6,7 @@
 // returns: number checkAtNewState
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) {
-    let rules = [lessThanTwoAlive, twoOrThreeAlive];
+    let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree];
     let max = 0;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
