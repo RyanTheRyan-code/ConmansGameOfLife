@@ -19,7 +19,7 @@ function generateBoard(width=16, height=16) {
         for (let j = 0; j < height; j++) {
             let space = document.createElement("div");
             space.className = "space state-0";
-            space.id = `${i},${j}`;
+            space.id = `${j},${i}`;
             // space.onclick = function() { setStateWithElement(this, Math.floor(Math.random() * 4)+1); };
             space.onclick = function() { setStateWithElement(this, 1); };
             line.append(space);
@@ -75,8 +75,10 @@ function getRandomColor() {
 
 // void subtractMap(Map)
 function subtractMap(map) {
-    map.forEach((value, coord) => {
+    map.forEach((value, coordStrOriginal) => {
         //coord[0] is x, coord[1] is y
+        let coordOfStrs = coordStrOriginal.split(',');
+        let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
             setStateVisually(coord[0],coord[1], 0);
         }
@@ -85,22 +87,24 @@ function subtractMap(map) {
 
 // void addMap(Map)
 function addMap(map) {
-    map.forEach((value, coord) => {
+    map.forEach((value, coordStrOriginal) => {
         //coord[0] is x, coord[1] is y
+        let coordOfStrs = coordStrOriginal.split(',');
+        let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
-            setStateVisually(coord[0],coord[1], 1);
+            setStateVisually(coord[0],coord[1], value);
         }
     });
 }
 
 function doStep() {
-    console.log("Before:");
-    console.log(alive_cells);
-    subtractMap(alive_cells);
+    // console.log("Before:");
+    // console.log(alive_cells);
     let new_alive_cells = step(alive_cells);
-    // addMap(new_alive_cells);
+    subtractMap(alive_cells);
+    addMap(new_alive_cells);
     alive_cells = new_alive_cells;
-    console.log("After:");
-    console.log(alive_cells);
-    console.log("____________");
+    // console.log("After:");
+    // console.log(alive_cells);
+    // console.log("____________");
 }
