@@ -33,22 +33,20 @@ function generateBoard(width=16, height=16) {
 function getAlive() { return alive_cells; }
 
 function setStateWithPos(x, y, state) {
-    updateAliveCellsForSetState(x, y, state);
+    updateAliveCellsForSetState([x, y].toString(), state);
     
     space = getSpace(x, y);
     setAnimationsForSetState(space, state);
 }
 function setStateWithElement(space, state) {
-    let x = parseInt(space.id.split(',')[0],10);
-    let y = parseInt(space.id.split(',')[1],10);
-    updateAliveCellsForSetState(x, y, state);
+    updateAliveCellsForSetState(space.id, state);
     setAnimationsForSetState(space, state);
 }
-function updateAliveCellsForSetState(x, y, state) {
+function updateAliveCellsForSetState(coordStr, state) {
     if(state == 0) {
-        alive_cells.delete([x,y]);
+        alive_cells.delete(coordStr);
     } else {
-        alive_cells.set([x,y],state);
+        alive_cells.set(coordStr,state);
     }
 }
 function setStateVisually(x, y, state) {
