@@ -12,13 +12,6 @@ let satisfyingMode = false;
 
 generateBoard();
 
-function moveBoard(amount) {
-    subtractMap(alive_cells);
-    board_width_min += amount;
-    board_width += amount;
-    addMap(alive_cells);
-
-}
 
 function generateBoard(width=16, height=16) {
     if(boardExists) {
@@ -26,7 +19,7 @@ function generateBoard(width=16, height=16) {
         document.getElementById("rulesContainer").remove();
     }
     boardExists = true;
-
+    
     board_height = height;
     board_height_min = 0;
     board_width = width;
@@ -34,7 +27,7 @@ function generateBoard(width=16, height=16) {
     alive_cells = new Map(); // Map[x,y] = state
     
     stopSteps();
-
+    
     let gameDiv = document.getElementById("game");
     let board = document.createElement("div");
     board.id = "board";
@@ -67,7 +60,7 @@ function generateBoard(width=16, height=16) {
 }
 
 // function randRule() {
-//     addRandRule();
+    //     addRandRule();
 // }
 
 function getAlive() { return alive_cells; }
@@ -75,7 +68,7 @@ function getAlive() { return alive_cells; }
 function randBoard() {
     let rand = Math.floor(Math.random() * (board_width*board_height));
     for(let i = 0; i < rand; i++) {
-        setStateWithPos(Math.floor(Math.random() * board_width),Math.floor(Math.random() * board_height),Math.ceil(Math.random() * 4));
+        setStateWithPos((Math.floor(Math.random() * board_width))-board_width_min,(Math.floor(Math.random() * board_height))-board_width_min,Math.ceil(Math.random() * 4));
     }
     if(activeStepInterval) startSteps();
 }
@@ -121,6 +114,15 @@ function getRandomColor() {
     return color;
 }
 
+function moveBoard(x, y) {
+    subtractMap(alive_cells);
+    board_width_min += x;
+    board_width += x;
+    board_height_min += y;
+    board_height += y;
+    addMap(alive_cells);
+}
+
 // void subtractMap(Map)
 function subtractMap(map) {
     map.forEach((value, coordStrOriginal) => {
@@ -128,7 +130,7 @@ function subtractMap(map) {
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         if(coord[0] >= board_width_min && coord[0] < board_width && coord[1] >= board_height_min && coord[1] < board_height) {
-            setStateVisually(coord[0]+board_width_min,coord[1]+board_height_min, value);
+            setStateVisually(coord[0]-board_width_min,coord[1]-board_height_min, 0);
         }
     });
 }
@@ -140,7 +142,7 @@ function addMap(map) {
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         if(coord[0] >= board_width_min && coord[0] < board_width && coord[1] >= board_height_min && coord[1] < board_height && value != getSpace(coord[0], coord[1]).className.split("state-")[1]) {
-            setStateVisually(coord[0]+board_width_min,coord[1]+board_height_min, value);
+            setStateVisually(coord[0]-board_width_min,coord[1]-board_height_min, value);
         }
     });
 }
