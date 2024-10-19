@@ -18,7 +18,14 @@ function resetRules() {
         {type: 0, numCells: 3, comparison: 4, neighborState: 1},
         {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
     ];
-    console.log(currentRules);
+    
+    let rulesContainer = document.getElementById("rules");
+    for(let i = 0; i < currentRules.length; i++) {
+        let content = document.createTextNode(`${i+1}. ` + ruleParser(currentRules[i]));
+        rulesContainer.append(content);
+        rulesContainer.append(document.createElement("br"));
+        rulesContainer.append(document.createElement("br"));
+    }
 }
 
 function addRandRule() {
@@ -55,6 +62,12 @@ function addRandRule() {
         
     }
     console.log(ruleParser(currentRules[currentRules.length-1]));
+    
+    let rulesContainer = document.getElementById("rules");
+    let content = document.createTextNode(`${currentRules.length}. ` + ruleParser(currentRules[currentRules.length - 1]));
+    rulesContainer.append(content);
+    rulesContainer.append(document.createElement("br"));
+    rulesContainer.append(document.createElement("br"));
 }
 
 function logRules() {
