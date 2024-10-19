@@ -303,6 +303,7 @@ function step(prevStateMap) {
     scoringCategories.colorDominance = ((colMax / colSum) * 100) * (colSum/500); //percentage of most abundant color (scaled by # cells)
     scoringCategories.colorBalance = 0-((colMax - (colSum/4)) - colSum); //i wish i knew what it meant
     console.log(scoringCategories); // THIS IS A CONSOLE LOG
+    updateScore();
     return nextStateMap;
 }
 
@@ -386,4 +387,10 @@ function ruleParser(rule) {
     str += "cells.";
 
     return str;
+}
+
+function updateScore() {
+    let scoreHeader = document.getElementById("score").children[0];
+    scoreHeader.innerHTML = "Score: " + Math.round(points);
+    
 }
