@@ -19,8 +19,11 @@
         <div class="buttonContainer">
             <div class="button" onclick="doStep()">Step</div>
         </div>
-        <div class="buttonContainer">
+        <div class="buttonContainer" id="goButton">
             <div class="button" onclick="startSteps()">Go</div>
+        </div>
+        <div class="buttonContainer" id="stopButton" style="display: none;">
+            <div class="button" onclick="stopSteps()">Stop</div>
         </div>
         <div class="buttonContainer">
             <!-- <div class="button" onclick="setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.floor(Math.random() * 4)+1)">Set State</div> -->
