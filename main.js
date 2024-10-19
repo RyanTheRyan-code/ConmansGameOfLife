@@ -106,7 +106,7 @@ function updateAliveCellsForSetState(coordStr, state) {
     }
 }
 function setStateVisually(x, y, state) { // pass virtuall coords
-    let space = getSpace(x,y);
+    let space = getSpace(x-widthOffset,y-heightOffset);
     setAnimationsForSetState(space,state);
 }
 function setAnimationsForSetState(space, state) {
@@ -117,7 +117,7 @@ function setAnimationsForSetState(space, state) {
 }
 
 function getSpace(x, y) {
-    return document.getElementById(`${x},${y}`);
+    return document.getElementById(`${x-widthOffset},${y-heightOffset}`);
 }
 
 function getRandomColor() {
