@@ -73,7 +73,9 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
 function step(prevStateMap) {
     let nextStateMap = new Map();
     let nextEmptyMap = new Map();
-    prevStateMap.forEach((cellState, coord) => {
+    prevStateMap.forEach((cellState, coordStrOriginal) => {
+        let coordOfStrs = coordStrOriginal.split(',');
+        let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         let stateChange = false;
         //we could've already looked at it from its alive neighbors
         let cstr = coord.toString();
