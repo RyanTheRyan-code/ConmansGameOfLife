@@ -42,9 +42,7 @@ div {
     height: 6.25%;
     flex-direction: row;
 }
-
 .space {
-    background-color: #00000040;
     border-radius: 10%;
     margin: 2px;
 }
