@@ -1,0 +1,4 @@
+.state-1 {
+    background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
+    box-shadow: 0 0 10px hsl(48, 72%, 56%);
+}
