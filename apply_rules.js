@@ -51,7 +51,7 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        console.log(`coord: ${checkAtCoord} with sum: ${sum}`);
+        // console.log(`coord: ${checkAtCoord} with sum: ${sum}`);
         return (sum == 3) ? 1 : DEAD_STATE;
     }
     return NO_STATE_CHANGE;
