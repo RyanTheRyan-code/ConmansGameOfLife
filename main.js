@@ -40,6 +40,13 @@ function generateBoard(width=16, height=16) {
 
 function getAlive() { return alive_cells; }
 
+function randBoard() {
+    let rand = Math.floor(Math.random() * (15*15));
+    for(let i = 0; i < rand; i++) {
+        setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),1);
+    }
+}
+
 function setStateWithPos(x, y, state) {
     updateAliveCellsForSetState([x, y].toString(), state);
     
