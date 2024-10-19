@@ -1,5 +1,3 @@
-const DEAD_BG = "#00000040";
-
 let boardExists = false;
 let board_height;
 let board_width;
