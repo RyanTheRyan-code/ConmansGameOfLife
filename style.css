@@ -1,7 +1,8 @@
 body {
-    background-color: pink;
+    background-color: rgb(171, 191, 199);
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
 }
 
 div {
@@ -29,7 +30,7 @@ div {
 }
 
 .space {
-    background-color: #936f94;
+    background-color: #6f8588;
     border-radius: 10%;
     margin: 0.25%;
 }
