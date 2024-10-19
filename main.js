@@ -92,7 +92,7 @@ function addMap(map) {
         //coord[0] is x, coord[1] is y
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
-        if(value != getSpace(coord[0], coord[1]).className.split("state-")[1] && coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
+        if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height && value != getSpace(coord[0], coord[1]).className.split("state-")[1]) {
             setStateVisually(coord[0],coord[1], value);
         }
     });
