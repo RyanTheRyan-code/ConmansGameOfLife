@@ -11,6 +11,7 @@ let genSpeed = 25;
 let satisfyingMode = false;
 let points;
 let activeScoringCategories = []; //list of {category: String, mult: number}
+let scoreConditions = ["", "Free Round", ""];
 
 generateBoard();
 
@@ -58,6 +59,9 @@ function generateBoard(width=16, height=16) {
     let scoreTitle = document.createElement("h1");
     scoreTitle.innerHTML = "Score: 0";
     score.append(scoreTitle);
+    let scoresPre = document.createElement("pre");
+    scoresPre.id = "scorePre";
+    score.append(scoresPre);
 
     let rules = document.createElement("div");
     rules.id = "rules";
@@ -195,6 +199,7 @@ function doStep() {
         }, speed);
     }
     scorePoints();
+    updateScore();
     assignNewScoringCategories();
     // console.log("After:");
     // console.log(alive_cells);
@@ -203,28 +208,36 @@ function doStep() {
 
 //call after a step; score appropriate points
 function scorePoints() {
+    let i = 0;
     for(let cat of activeScoringCategories) {
         switch(cat.category) {
             case "cellBorn": 
                 points += scoringCategories.cellBorn * cat.mult;
+                scoreConditions[i++] = "cellBorn";
                 break;
             case "cellDies":
                 points += scoringCategories.cellDies * cat.mult;
+                scoreConditions[i++] = "cellDies";
                 break;
             case "cellAlive":
                 points += scoringCategories.cellAlive * cat.mult;
+                scoreConditions[i++] = "cellAlive";
                 break;
             case "maxYDist":
                 points += scoringCategories.maxYDist * cat.mult;
+                scoreConditions[i++] = "maxYDist";
                 break;
             case "maxXDist":
                 points += scoringCategories.maxXDist * cat.mult;
+                scoreConditions[i++] = "maxXDist";
                 break;
             case "colorBalance":
                 points += scoringCategories.colorBalance * cat.mult;
+                scoreConditions[i++] = "colorBalance";
                 break;
             case "colorDominance":
                 points += scoringCategories.colorDominance * cat.mult;
+                scoreConditions[i++] = "colorDominance";
                 break;
             default: break;
         }
