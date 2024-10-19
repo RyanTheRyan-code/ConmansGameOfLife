@@ -34,7 +34,7 @@ function changeState(space) {
 
 function setState(x, y, state) {
     space = getSpace(x, y);
-    space.className = state;
+    space.className = `space state-${state}`;
 }
 
 function getSpace(x, y) {
