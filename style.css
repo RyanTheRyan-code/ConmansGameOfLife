@@ -33,8 +33,9 @@ div {
     flex-direction: column;
 }
 #rules {
-    height: 32px;
+    padding: 8px;
     align-items: center;
+    text-align: center;
     margin-top: 4px;
     margin-bottom: 4px;
     background-color: hsl(197, 20%, 73%);

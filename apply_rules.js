@@ -63,6 +63,12 @@ function addRandRule() {
             break;
         
     }
+    let rulesContainer = document.getElementById("rulesContainer");
+    let rulesBox = document.createElement("div");
+    rulesBox.id = "rules";
+    let content = document.createTextNode(ruleParser(currentRules[currentRules.length - 1]));
+    rulesBox.append(content);
+    rulesContainer.append(rulesBox);
 }
 
 // Any variables with `Map` at the end, are maps.
@@ -300,7 +306,7 @@ function ruleParser(rule) {
     else if(rule.neighborState == 3) str += "green ";
     else if(rule.neighborState == 4) str += "blue ";
 
-    str += "cells.";
+    str += `cell${(rule.neighborState == 1) ? "" : "s"}.`;
 
     return str;
 }
