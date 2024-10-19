@@ -109,11 +109,11 @@ function updateAliveCellsForSetState(coordStr, state) {
         alive_cells.set(coordStrMod,state);
     }
 }
-function setStateVisually(x, y, state) { // pass virtuall coords
+function setStateVisually(x, y, state, skipAnimation=false) { // pass virtuall coords
     let space = getSpace(x+widthOffset,y+heightOffset);
-    setAnimationsForSetState(space,state);
+    setAnimationsForSetState(space,state,skipAnimation);
 }
-function setAnimationsForSetState(space, state, skipAnimation = false) {
+function setAnimationsForSetState(space, state, skipAnimation=false) {
     if(skipAnimation) {
         space.className = `space state-${state}`;
         return;
@@ -138,32 +138,32 @@ function getRandomColor() {
 }
 
 function moveBoard(x, y) {
-    subtractMap(alive_cells);
+    subtractMap(alive_cells, true);
     widthOffset += x;
     heightOffset += y;
-    addMap(alive_cells);
+    addMap(alive_cells, true);
 }
 
 // void subtractMap(Map)
-function subtractMap(map) {
+function subtractMap(map, skipAnimation=false) {
     map.forEach((value, coordStrOriginal) => {
         //coord[0] is x, coord[1] is y
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         if(coord[0] >= widthOffset && coord[0] < board_width+widthOffset && coord[1] >= heightOffset && coord[1] < board_height+heightOffset) {
-            setStateVisually(coord[0]-widthOffset,coord[1]-heightOffset, 0);
+            setStateVisually(coord[0]-widthOffset,coord[1]-heightOffset, 0,skipAnimation);
         }
     });
 }
 
 // void addMap(Map)
-function addMap(map) {
+function addMap(map, skipAnimation=false) {
     map.forEach((value, coordStrOriginal) => {
         //coord[0] is x, coord[1] is y
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
         if(coord[0] >= widthOffset && coord[0] < board_width+widthOffset && coord[1] >= heightOffset && coord[1] < board_height+heightOffset && value != getSpace(coord[0], coord[1]).className.split("state-")[1]) {
-            setStateVisually(coord[0]-widthOffset,coord[1]-heightOffset, value);
+            setStateVisually(coord[0]-widthOffset,coord[1]-heightOffset, value,skipAnimation);
         }
     });
 }
