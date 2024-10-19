@@ -13,7 +13,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
-        console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
+        // console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
         max = (max > result) ? max : result;
     }
     return max;
@@ -50,8 +50,8 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 // number exactThree(Map, [number, number])
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
-        console.log("unalive");
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        console.log(`coord: ${checkAtCoord} with sum: ${sum}`);
         return (sum == 3) ? 1 : DEAD_STATE;
     }
     return NO_STATE_CHANGE;
