@@ -1,3 +1,22 @@
 body {
     background-color: pink;
 }
+
+div {
+    display: flex;
+}
+
+.board {
+    flex-direction: column;
+}
+.line {
+    flex-direction: row;
+}
+
+.space {
+    width: 64px;
+    height: 64px;
+    background-color: #8f699b;
+    border-radius: 8px;
+    margin: 2px;
+}
