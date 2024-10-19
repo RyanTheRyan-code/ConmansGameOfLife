@@ -11,6 +11,10 @@ div {
     justify-content: center;
 }
 
+#menu {
+    flex-direction: row;
+}
+
 #game {
     width: 80vh;
     height: 80vh;
