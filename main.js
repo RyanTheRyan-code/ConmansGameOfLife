@@ -5,6 +5,7 @@ let alive_cells = new Map(); // Map[x,y] = state
 let stepInterval;
 let activeStepInterval = false;
 let speed = 500;
+let genSpeed = 25;
 let satisfyingMode = false;
 
 generateBoard();
@@ -27,11 +28,12 @@ function generateBoard(width=16, height=16) {
         line.className = "line";
         for (let j = 0; j < height; j++) {
             let space = document.createElement("div");
-            space.className = "space state-0";
             space.id = `${j},${i}`;
-            // space.onclick = function() { setStateWithElement(this, Math.floor(Math.random() * 4)+1); };
             space.onclick = function() { setStateWithElement(this, 1); };
             line.append(space);
+            setTimeout(function () {
+                space.className = "space pop-out state-0";
+            }, i*genSpeed + j*genSpeed);
         }
         board.append(line);
     }
