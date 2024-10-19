@@ -18,7 +18,7 @@ function resetRules() {
         {type: 0, numCells: 3, comparison: 4, neighborState: 1},
         {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
     ];
-    console.log(currentRules);
+    logRules();
 
     let rulesContainer = document.getElementById("rulesContainer");
     for(let rule of currentRules) {
