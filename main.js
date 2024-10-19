@@ -111,7 +111,11 @@ function setStateVisually(x, y, state) { // pass virtuall coords
     let space = getSpace(x-widthOffset,y-heightOffset);
     setAnimationsForSetState(space,state);
 }
-function setAnimationsForSetState(space, state) {
+function setAnimationsForSetState(space, state, skipAnimation = false) {
+    if(skipAnimation) {
+        space.className = `space state-${state}`;
+        return;
+    }
     space.classList.add("shrink");
     setTimeout(() => {
         space.className = `space pop-out state-${state}`;
