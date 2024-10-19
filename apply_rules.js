@@ -7,18 +7,20 @@
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) {
     let rules = [lessThanTwoAlive, twoOrThreeAlive];
-    let m = 0;
-    for(r in rules) {
-        m = max(m, r(curStateMap, checkAtCoord));
+    let max = 0;
+    for(let rule of rules) {
+        let result = rule(curStateMap, checkAtCoord);
+        // console.log(result);
+        max = (max > result) ? max : result;
     }
-    return m;
+    return max;
 };
 
 // number lessThanTwoAlive(Map, [number, number])
 let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum < 2) ? 0 : curStateMap[checkAtCoord];
+        return (sum < 2) ? 0 : curStateMap.get(checkAtCoord);
     }
     return 0;
 }
@@ -27,7 +29,7 @@ let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
 let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum == 2 || sum == 3) ? 0 : curStateMap[checkAtCoord];
+        return (sum == 2 || sum == 3) ? 0 : curStateMap.get(checkAtCoord);
     }
     return 0;
 }
@@ -36,7 +38,7 @@ let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
 let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum > 3) ? 0 : curStateMap[checkAtCoord];
+        return (sum > 3) ? 0 : curStateMap.get(checkAtCoord);
     }
     return 0;
 }
@@ -45,7 +47,7 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum == 3) ? 1 : curStateMap[checkAtCoord];
+        return (sum == 3) ? 1 : curStateMap.get(checkAtCoord);
     }
     return curStateMap[checkAtCoord];
 }
@@ -69,9 +71,7 @@ function step(prevStateMap) {
     prevStateMap.forEach((cellState, coord) => {
         let stateChange = false;
         //we could've already looked at it from its alive neighbors
-        console.log("--looking at a cell");
         if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
-            console.log("--in the if");
             let newState = applyRules(prevStateMap, coord); 
             stateChange = prevStateMap[coord] == newState;
             updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap);
@@ -105,16 +105,14 @@ function step(prevStateMap) {
 
 // void updateCoord([number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
 function updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap) {
-    console.log("--updated");
     if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
         let newState = applyRules(prevStateMap, coord);
-        console.log(newState);
         if(newState == 0) {
-            nextEmptyMap[coord] = newState;
+            nextEmptyMap.set(coord, newState);
         } else if(newState == -1) {
-            nextStateMap[coord] = prevStateMap[coord];
+            nextStateMap.set(coord, prevStateMap.get(coord));
         } else {
-            nextStateMap[coord] = newState;
+            nextStateMap.set(coord, newState);
         }
     }
 }
