@@ -1,3 +1,5 @@
+const DEAD_BG = "#00000040";
+
 let boardExists = false;
 let board_height;
 let board_width;
@@ -47,4 +49,24 @@ function getRandomColor() {
         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+}
+
+// void subtractMap(Map)
+function subtractMap(map) {
+    map.forEach((value, coord) => {
+        //coord[0] is x, coord[1] is y
+        if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
+            document.getElementById(`${coord[0]},${coord[1]}`).style.background = DEAD_BG;
+        }
+    });
+}
+
+// void subtractMap(Map)
+function addMap(map) {
+    map.forEach((value, coord) => {
+        //coord[0] is x, coord[1] is y
+        if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
+            changeState(document.getElementById(`${coord[0]},${coord[1]}`));
+        }
+    });
 }
