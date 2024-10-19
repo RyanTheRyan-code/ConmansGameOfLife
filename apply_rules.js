@@ -7,13 +7,40 @@
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) { return 1; };
 
-// number twoAlive(Map, [number, number])
-let twoAlive = function (curStateMap, checkAtCoord) {
+// number lessThanTwoAlive(Map, [number, number])
+let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum <= 2) ? 0 : curStateMap[checkAtCoord];
+        return (sum < 2) ? 0 : curStateMap[checkAtCoord];
     }
     return 0;
+}
+
+// number twoOrThreeAlive(Map, [number, number])
+let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
+    if (curStateMap.has(checkAtCoord)) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        return (sum == 2 || sum == 3) ? 0 : curStateMap[checkAtCoord];
+    }
+    return 0;
+}
+
+// number moreThanThreeAlive(Map, [number, number])
+let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
+    if (curStateMap.has(checkAtCoord)) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        return (sum > 3) ? 0 : curStateMap[checkAtCoord];
+    }
+    return 0;
+}
+
+// number exactThree(Map, [number, number])
+let exactThree = function (curStateMap, checkAtCoord) {
+    if (!curStateMap.has(checkAtCoord)) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
+        return (sum == 3) ? 1 : curStateMap[checkAtCoord];
+    }
+    return curStateMap[checkAtCoord];
 }
 
 // number sumNeighbor(Map, [number, number], number)
