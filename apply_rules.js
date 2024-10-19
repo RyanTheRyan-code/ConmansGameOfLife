@@ -1,3 +1,5 @@
+const NO_STATE_CHANGE = 10000;
+
 // Any variables with `Map` at the end, are maps.
 // Any variables with `Coord` at the end, are [x,y] arrays.
 // Any variables with `State` at the end, are numbers, representing the states of a cell.
@@ -10,7 +12,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
     let max = 0;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
-        console.log(checkAtCoord);
+        // console.log(checkAtCoord);
         // console.log(result);
         max = (max > result) ? max : result;
     }
@@ -21,7 +23,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
 let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum < 2) ? 0 : -1;
+        return (sum < 2) ? 0 : NO_STATE_CHANGE;
     }
     return 0;
 }
@@ -31,7 +33,7 @@ let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
         // console.log(`two or three sum neighbors: ${sum}`);
-        return (sum == 2 || sum == 3) ? -1 : 0;
+        return (sum == 2 || sum == 3) ? NO_STATE_CHANGE : 0;
     }
     return 0;
 }
@@ -40,7 +42,7 @@ let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
 let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum > 3) ? 0 : -1;
+        return (sum > 3) ? 0 : NO_STATE_CHANGE;
     }
     return 0;
 }
@@ -49,9 +51,9 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum == 3) ? 1 : -1;
+        return (sum == 3) ? 1 : 0;
     }
-    return -1;
+    return NO_STATE_CHANGE;
 }
 
 // number sumNeighbor(Map, [number, number], number)
@@ -124,9 +126,13 @@ function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) 
     if(!nextStateMap.has(coordStr) && !nextEmptyMap.has(coordStr)) {
         let newState = applyRules(prevStateMap, coord);
         if(newState == 0) {
-            nextEmptyMap.set(coordStr, newState);
-        } else if(newState == -1) {
-            nextStateMap.set(coordStr, prevStateMap.get(coordStr));
+            nextEmptyMap.set(coordStr, 0);
+        } else if(newState == NO_STATE_CHANGE) {
+            if(prevStateMap.get(coordStr) == 0) {
+                nextEmptyMap.set(coordStr, 0);
+            } else {
+                nextStateMap.set(coordStr, prevStateMap.get(coordStr));
+            }
         } else {
             nextStateMap.set(coordStr, newState);
         }
