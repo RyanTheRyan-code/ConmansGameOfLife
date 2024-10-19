@@ -69,7 +69,9 @@ function step(prevStateMap) {
     prevStateMap.forEach((cellState, coord) => {
         let stateChange = false;
         //we could've already looked at it from its alive neighbors
+        console.log("--looking at a cell");
         if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
+            console.log("--in the if");
             let newState = applyRules(prevStateMap, coord); 
             stateChange = prevStateMap[coord] == newState;
             updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap);
@@ -103,6 +105,7 @@ function step(prevStateMap) {
 
 // void updateCoord([number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
 function updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap) {
+    console.log("--updated");
     if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
         let newState = applyRules(prevStateMap, coord);
         console.log(newState);
