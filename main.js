@@ -17,7 +17,7 @@ function generateBoard(width=16, height=16) {
             let space = document.createElement("div");
             space.className = "space state-0";
             space.id = `${i},${j}`;
-            space.onclick = function() { setStateWithElement(this, Math.floor(Math.random() * 4)+1); };
+            space.onclick = function() { setStateWithElement(this, 1); };
             line.append(space);
         }
         board.append(line);
@@ -30,8 +30,6 @@ function getAlive() { return alive_cells; }
 
 function setStateWithPos(x, y, state) {
     updateAliveCellsForSetStace(x, y, state);
-    console.log(x);
-    console.log(y);
     
     space = getSpace(x, y);
     setAnimationsForSetState(space, state);
@@ -39,12 +37,12 @@ function setStateWithPos(x, y, state) {
 function setStateWithElement(space, state) {
     let x = parseInt(space.id.split(',')[0],10);
     let y = parseInt(space.id.split(',')[1],10);
-    console.log(x);
-    console.log(y);
     updateAliveCellsForSetStace(x, y, state);
     setAnimationsForSetState(space, state);
 }
 function updateAliveCellsForSetStace(x, y, state) {
+    console.log(`${x}, ${y}`);
+    // console.log(y);
     if(state == 0) {
         alive_cells.delete([x,y]);
     } else {

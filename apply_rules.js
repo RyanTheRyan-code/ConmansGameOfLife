@@ -29,7 +29,8 @@ let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
 let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum == 2 || sum == 3) ? 0 : curStateMap.get(checkAtCoord);
+        // console.log(`two or three sum neighbors: ${sum}`);
+        return (sum == 2 || sum == 3) ? curStateMap.get(checkAtCoord) : 0;
     }
     return 0;
 }
@@ -54,14 +55,17 @@ let exactThree = function (curStateMap, checkAtCoord) {
 
 // number sumNeighbor(Map, [number, number], number)
 function sumNeighbor(curStateMap, checkAtCoord, value) {
-    return (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]-1]) && curStateMap([checkAtCoord[0]-1, checkAtCoord[1]-1]) == value) +
-    (curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1]) && curStateMap([checkAtCoord[0], checkAtCoord[1]-1]) == value) +
-    (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]-1]) && curStateMap([checkAtCoord[0]+1, checkAtCoord[1]-1]) == value) +
-    (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]]) && curStateMap([checkAtCoord[0]-1, checkAtCoord[1]]) == value) +
-    (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]]) && curStateMap([checkAtCoord[0]+1, checkAtCoord[1]]) == value) +
-    (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]+1]) && curStateMap([checkAtCoord[0]-1, checkAtCoord[1]+1]) == value) +
-    (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1]) && curStateMap([checkAtCoord[0], checkAtCoord[1]+1]) == value) +
-    (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1]) && curStateMap([checkAtCoord[0]+1, checkAtCoord[1]+1]) == value);
+    let sum = (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]-1]) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]-1]) == value) +
+    (curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1]) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]-1]) == value) +
+    (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]-1]) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]-1]) == value) +
+    (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]]) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]]) == value) +
+    (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]]) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]]) == value) +
+    (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]+1]) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]+1]) == value) +
+    (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1]) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]+1]) == value) +
+    (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1]) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]+1]) == value);
+    let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1]);
+    console.log(`for coord: (${checkAtCoord[0]}, ${checkAtCoord[1]}), sum: ${sum}, above: ${above}`);
+    return sum;
 }
 
 //Map step(Map)
