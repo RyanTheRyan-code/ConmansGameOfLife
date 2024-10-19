@@ -34,7 +34,7 @@ function setState(x, y, state) {
     space = getSpace(x, y);
     space.className = `space state-${state}`;
 }
-function setState(space, state) {
+function setStateElem(space, state) {
     space.className = `space state-${state}`;
 }
 
@@ -66,7 +66,7 @@ function addMap(map) {
     map.forEach((value, coord) => {
         //coord[0] is x, coord[1] is y
         if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
-            changeState(document.getElementById(`${coord[0]},${coord[1]}`));
+            setState(document.getElementById(`${coord[0]},${coord[1]}`), 1);
         }
     });
 }
