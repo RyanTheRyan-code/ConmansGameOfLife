@@ -20,8 +20,8 @@ function resetRules() {
     ];
 
     let rulesContainer = document.getElementById("rules");
-    for(let rule of currentRules) {
-        let content = document.createTextNode(ruleParser(rule));
+    for(let i = 0; i < currentRules.length; i++) {
+        let content = document.createTextNode(`${i+1}. ` + ruleParser(currentRules[i]));
         rulesContainer.append(content);
         rulesContainer.append(document.createElement("br"));
         rulesContainer.append(document.createElement("br"));
@@ -62,7 +62,7 @@ function addRandRule() {
         
     }
     let rulesContainer = document.getElementById("rules");
-    let content = document.createTextNode(ruleParser(currentRules[currentRules.length - 1]));
+    let content = document.createTextNode(`${currentRules.length}. ` + ruleParser(currentRules[currentRules.length - 1]));
     rulesContainer.append(content);
     rulesContainer.append(document.createElement("br"));
     rulesContainer.append(document.createElement("br"));
