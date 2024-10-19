@@ -37,6 +37,10 @@ function changeState(space) {
     space.style.background = getRandomColor();
 }
 
+function getSpace(x, y) {
+    return document.getElementById(`${x},${y}`);
+}
+
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
