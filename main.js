@@ -19,7 +19,7 @@ function generateBoard(width=16, height=16) {
             let space = document.createElement("div");
             space.classList.add("space");
             space.id = `${i},${j}`;
-            space.onclick = function() { setState(this, 1); };
+            space.onclick = function() { setStateWithElement(this, 1); };
             line.append(space);
         }
         board.append(line);
@@ -30,11 +30,12 @@ function generateBoard(width=16, height=16) {
 
 function getAlive() { return alive_cells; }
 
-function setState(x, y, state) {
+function setStateWithPos(x, y, state) {
     space = getSpace(x, y);
     space.className = `space state-${state}`;
 }
-function setStateElem(space, state) {
+
+function setStateWithElement(space, state) {
     space.className = `space state-${state}`;
 }
 

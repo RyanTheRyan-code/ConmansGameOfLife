@@ -1,4 +1,36 @@
 .state-1 {
     background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
     box-shadow: 0 0 10px hsl(48, 72%, 56%);
+    animation-name: state-1-anim;
+    animation-duration: 3s;
+}
+@keyframes state-1-anim {
+    0% {
+        background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
+        box-shadow: 0 0 10px hsl(48, 72%, 56%);
+        filter: brightness(0%) opacity(25%);
+    }
+    5% {
+        background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
+        box-shadow: 0 0 10px hsl(48, 72%, 56%);
+        filter: brightness(0%) opacity(25%);
+        transform: scale(0);
+    }
+    10% {
+        background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
+        box-shadow: 0 0 10px hsl(48, 72%, 56%);
+        filter: brightness(110%);
+        transform: scale(1.1);
+    }
+    20% {
+        background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
+        box-shadow: 0 0 10px hsl(48, 72%, 56%);
+        filter: brightness(110%);
+        transform: scale(1);
+    }
+    100% {
+        background: radial-gradient(hsl(48, 72%, 80%), hsl(48, 72%, 56%));
+        box-shadow: 0 0 10px hsl(48, 72%, 56%);
+        filter: brightness(100%);
+    }
 }
