@@ -18,7 +18,7 @@ function resetRules() {
         {type: 0, numCells: 3, comparison: 4, neighborState: 1},
         {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
     ];
-    console.log(currentRules);
+    logRules();
 }
 
 function addRandRule() {
@@ -53,6 +53,13 @@ function addRandRule() {
             });
             break;
         
+    }
+    console.log(ruleParser(currentRules[currentRules.length-1]));
+}
+
+function logRules() {
+    for (let rule of currentRules) {
+        console.log(ruleParser(rule));
     }
 }
 
@@ -267,10 +274,10 @@ function ruleParser(rule) {
     
     str += rule.numCells;
 
-    if(rule[neighborState] == 1) str += "yellow ";
-    else if(rule[neighborState] == 2) str += "pink ";
-    else if(rule[neighborState] == 3) str += "green ";
-    else if(rule[neighborState] == 4) str += "blue ";
+    if(rule.neighborState == 1) str += "yellow ";
+    else if(rule.neighborState == 2) str += "pink ";
+    else if(rule.neighborState == 3) str += "green ";
+    else if(rule.neighborState == 4) str += "blue ";
 
     str += "neighbors.";
 
