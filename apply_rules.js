@@ -1,4 +1,5 @@
 const NO_STATE_CHANGE = 10000;
+const NO_DECISION = -1;
 
 // Any variables with `Map` at the end, are maps.
 // Any variables with `Coord` at the end, are [x,y] arrays.
@@ -12,8 +13,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
     let max = 0;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
-        // console.log(checkAtCoord);
-        // console.log(result);
+        console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
         max = (max > result) ? max : result;
     }
     return max;
@@ -25,7 +25,7 @@ let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
         return (sum < 2) ? 0 : NO_STATE_CHANGE;
     }
-    return 0;
+    return NO_DECISION;
 }
 
 // number twoOrThreeAlive(Map, [number, number])
@@ -35,16 +35,16 @@ let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
         // console.log(`two or three sum neighbors: ${sum}`);
         return (sum == 2 || sum == 3) ? NO_STATE_CHANGE : 0;
     }
-    return 0;
+    return NO_DECISION;
 }
 
 // number moreThanThreeAlive(Map, [number, number])
 let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum > 3) ? 0 : NO_STATE_CHANGE;
+        return (sum > 3) ? 0 : NO_DECISION;
     }
-    return 0;
+    return NO_DECISION;
 }
 
 // number exactThree(Map, [number, number])
@@ -53,7 +53,7 @@ let exactThree = function (curStateMap, checkAtCoord) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
         return (sum == 3) ? 1 : 0;
     }
-    return NO_STATE_CHANGE;
+    return NO_DECISION;
 }
 
 // number sumNeighbor(Map, [number, number], number)
@@ -66,8 +66,8 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
     (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0]-1, checkAtCoord[1]+1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]+1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) == value);
-    let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString());
-    console.log(`for coord: (${checkAtCoord}), sum: ${sum}, above: ${[checkAtCoord[0], checkAtCoord[1]-1].toString()} ${above}`);
+    // let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString());
+    // console.log(`for coord: (${checkAtCoord}), sum: ${sum}, above: ${[checkAtCoord[0], checkAtCoord[1]-1].toString()} ${above}`);
     return sum;
 }
 
