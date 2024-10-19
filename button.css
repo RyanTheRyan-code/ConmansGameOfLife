@@ -25,6 +25,7 @@
     transition:0.1s;
     transform: translateY(-4px);
     font-family: sans-serif;
+    font-weight: bold;
 }
 .button:hover {
     transform: translateY(-6px);

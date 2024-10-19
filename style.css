@@ -1,8 +1,16 @@
+html, head, body {
+    height: 100%;
+}
+
 body {
-    background-color: rgb(171, 191, 199);
+    background: linear-gradient(hsl(197, 20%, 73%), hsl(185, 10%, 50%));
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+}
+
+h1 {
+    color: hsl(210, var(--saturation), 30%);
 }
 
 div {
@@ -13,6 +21,7 @@ div {
 
 #menu {
     flex-direction: row;
+    margin-bottom: 16px;
 }
 
 #game {
@@ -34,7 +43,7 @@ div {
 }
 
 .space {
-    background-color: #6f8588;
+    background-color: #00000040;
     border-radius: 10%;
     margin: 2px;
 }
