@@ -26,11 +26,9 @@ div {
     width: 100%;
     height: 6.25%;
     flex-direction: row;
-    margin: 0;
 }
 
 .space {
-    width: 99.5%;
     background-color: #936f94;
     border-radius: 10%;
     margin: 0.25%;
