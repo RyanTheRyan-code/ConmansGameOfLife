@@ -11,6 +11,21 @@ div {
     justify-content: center;
 }
 
+#menu {
+    flex-direction: row;
+}
+
+button {
+    margin: 8px;
+    padding: 8px;
+    font-size: 16px;
+    background-color: rgb(94, 128, 128);
+    color: white;
+    border: 4px solid white;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
 #game {
     width: 80vh;
     height: 80vh;

@@ -4,11 +4,6 @@ let board_width;
 let board_state = []; // vec<vec<number>>
 let alive_cells = []; // vec<number> where number is a coordinate: x = number%width, y = number/width
 
-function DoSomething(that) {
-    console.log("Wow");
-    that.innerHTML =  ">.<";
-}
-
 function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
     boardExists = true;
