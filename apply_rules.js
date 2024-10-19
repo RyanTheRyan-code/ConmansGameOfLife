@@ -64,7 +64,7 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
     (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0], checkAtCoord[1]+1].toString()) == value) +
     (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) && curStateMap.get([checkAtCoord[0]+1, checkAtCoord[1]+1].toString()) == value);
     let above = curStateMap.has([checkAtCoord[0], checkAtCoord[1]-1].toString());
-    console.log(`for coord: (${checkAtCoord[0]}, ${checkAtCoord[1]}), sum: ${sum}, above: ${above}`);
+    console.log(`for coord: (${checkAtCoord}), sum: ${sum}, above: ${above}`);
     return sum;
 }
 
