@@ -19,13 +19,12 @@ function resetRules() {
         {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
     ];
 
-    let rulesContainer = document.getElementById("rulesContainer");
+    let rulesContainer = document.getElementById("rules");
     for(let rule of currentRules) {
-        let rulesBox = document.createElement("div");
-        rulesBox.id = "rules";
         let content = document.createTextNode(ruleParser(rule));
-        rulesBox.append(content);
-        rulesContainer.append(rulesBox);
+        rulesContainer.append(content);
+        rulesContainer.append(document.createElement("br"));
+        rulesContainer.append(document.createElement("br"));
     }
 }
 
@@ -62,12 +61,11 @@ function addRandRule() {
             break;
         
     }
-    let rulesContainer = document.getElementById("rulesContainer");
-    let rulesBox = document.createElement("div");
-    rulesBox.id = "rules";
+    let rulesContainer = document.getElementById("rules");
     let content = document.createTextNode(ruleParser(currentRules[currentRules.length - 1]));
-    rulesBox.append(content);
-    rulesContainer.append(rulesBox);
+    rulesContainer.append(content);
+    rulesContainer.append(document.createElement("br"));
+    rulesContainer.append(document.createElement("br"));
 }
 
 let scoringCategories = {

@@ -56,6 +56,12 @@ function generateBoard(width=16, height=16) {
     rulesPage.id = "rulesContainer";
     gameDiv.append(board);
     gameDiv.append(rulesPage);
+    let rules = document.createElement("div");
+    rules.id = "rules";
+    rulesPage.append(rules);
+    let rulesTitle = document.createElement("h1");
+    rulesTitle.innerHTML = "Rules";
+    rules.append(rulesTitle);
     resetRules();
     console.log("finished generating board");
 }
