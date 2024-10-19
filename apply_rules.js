@@ -75,71 +75,57 @@ function step(prevStateMap) {
     prevStateMap.forEach((cellState, coord) => {
         let stateChange = false;
         //we could've already looked at it from its alive neighbors
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
+        let cstr = coord.toString();
+        if(!nextStateMap.has(cstr) && !nextEmptyMap.has(cstr)) {
             let newState = applyRules(prevStateMap, coord); 
-            stateChange = prevStateMap[coord] == newState;
-            updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap);
+            stateChange = prevStateMap[cstr] == newState;
+            updateCoord(cstr, coord, prevStateMap, nextStateMap, nextEmptyMap);
             // prevStateMap[coord] = newState;
         }
         //if the cell didn't change, we don't need to update the neighbors
         if(stateChange) {
             //look at neighbors
             let c = [coord[0]-1, coord[1]-1];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            let cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0], coord[1]-1];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0]+1, coord[1]-1];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
 
             c = [coord[0]-1, coord[1]];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0]+1, coord[1]];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
 
             c = [coord[0]-1, coord[1]+1];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0], coord[1]+1];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
             c = [coord[0]+1, coord[1]+1];
-            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            cstr = c.toString();
+            updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
         }
     });
     return nextStateMap;
 }
 
-// void updateCoord([number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
-function updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap) {
-    if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
+// void updateCoord(string coordStr, [number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
+function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) {
+    if(!nextStateMap.has(coordStr) && !nextEmptyMap.has(coordStr)) {
         let newState = applyRules(prevStateMap, coord);
         if(newState == 0) {
-            nextEmptyMap.set(coord, newState);
+            nextEmptyMap.set(coordStr, newState);
         } else if(newState == -1) {
-            nextStateMap.set(coord, prevStateMap.get(coord));
+            nextStateMap.set(coordStr, prevStateMap.get(coordStr));
         } else {
-            nextStateMap.set(coord, newState);
+            nextStateMap.set(coordStr, newState);
         }
     }
 }
-
-// let rule1 = function(curStateMap, checkAtCoord) { 
-//     if(curStateMap[[checkAtCoord[0], checkAtCoord[1]+1]] == 1 || curStateMap[[checkAtCoord[0], checkAtCoord[1]-1]] == 1) {
-//         return 2;
-//     }
-//     return 0;
-// }
-// let rule2 = function(curStateMap, checkAtCoord) {
-//     if(curStateMap[[checkAtCoord[0]-1, checkAtCoord[1]]] == 1 || curStateMap[[checkAtCoord[0]+1, checkAtCoord[1]]] == 1) {
-//         return 3;
-//     }
-//     return 0;
-// }
-
-
-// applyRules = function(curStateMap, checkAtCoord) {
-//     let rules = [rule1, rule2];
-//     let m = 0;
-//     for(r in rules) {
-//         m = max(m, r(curStateMap, checkAtCoord));
-//     }
-//     return m;    
-// }
