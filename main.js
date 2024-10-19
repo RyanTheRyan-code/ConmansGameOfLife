@@ -1,17 +1,17 @@
-boardExists = false;
+let boardExists = false;
 
 function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
     boardExists = true;
 
-    gameDiv = document.getElementById("game");
-    board = document.createElement("div");
+    let gameDiv = document.getElementById("game");
+    let board = document.createElement("div");
     board.id = "board";
     for(i = 0; i < width; i++) {
-        line = document.createElement("div");
+        let line = document.createElement("div");
         line.className = "line";
         for (let j = 0; j < height; j++) {
-            space = document.createElement("div");
+            let space = document.createElement("div");
             space.classList.add("space");
             space.id = `${i},${j}`;
             space.onclick = function() { changeState(this); };
