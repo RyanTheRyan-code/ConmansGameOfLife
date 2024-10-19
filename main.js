@@ -5,6 +5,7 @@ let alive_cells = new Map(); // Map[x,y] = state
 let stepInterval;
 let activeStepInterval = false;
 let speed = 500;
+let satisfyingMode = false;
 
 generateBoard();
 
@@ -121,6 +122,13 @@ function doStep() {
     subtractMap(old_alive_cells);
     addMap(new_alive_cells);
     alive_cells = new_alive_cells;
+    if(alive_cells.size === 0 && satisfyingMode) {
+        stopSteps();
+        setTimeout(() => { 
+            randBoard();
+            startSteps(); 
+        }, speed);
+    }
     // console.log("After:");
     // console.log(alive_cells);
     // console.log("____________");
