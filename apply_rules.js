@@ -70,10 +70,46 @@ function addRandRule() {
     rulesContainer.append(document.createElement("br"));
 }
 
-function logRules() {
-    for (let rule of currentRules) {
-        console.log(ruleParser(rule));
-    }
+let allScoringCategories = [
+    "cellBorn",
+    "cellDies",
+    "cellAlive",
+    "maxYDist",
+    "maxXDist",
+    "colorBalance",
+    "colorDominance"
+];
+
+let allScoringCategoryMultiplyers = [
+    [-1, 7],
+    [-5, 5],
+    [1, 3],
+    [-2, 8],
+    [-2, 8],
+    [-3, 3],
+    [2, 8]
+];
+
+let scoringCategories = {
+    "cellBorn": 0,
+    "cellDies": 0,
+    "cellAlive": 0,
+    "maxYDist": 0,
+    "maxXDist": 0,
+    "colorBalance": 0,
+    "colorDominance": 0
+};
+
+function resetScores() {
+    scoringCategories = {
+        "cellBorn": 0,
+        "cellDies": 0,
+        "cellAlive": 0,
+        "maxYDist": 0,
+        "maxXDist": 0,
+        "colorBalance": 0,
+        "colorDominance": 0
+    };
 }
 
 // Any variables with `Map` at the end, are maps.
@@ -201,8 +237,20 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
     return sum;
 }
 
+//these 4 are for score calculations, no touching pls
+let leftMost;
+let rightMost;
+let upMost;
+let downMost;
+//this is also for score calculations, no touching too pls
+let cols;
+
 //Map step(Map)
+// can access scoringCategories after calling to step
 function step(prevStateMap) {
+    resetScores();
+    leftMost = NaN; rightMost = NaN; upMost = NaN; downMost = NaN;
+    cols = [0,0,0,0];
     let nextStateMap = new Map();
     let nextEmptyMap = new Map();
     prevStateMap.forEach((cellState, coordStrOriginal) => {
@@ -211,11 +259,11 @@ function step(prevStateMap) {
         let stateChange = false;
         //we could've already looked at it from its alive neighbors
         let cstr = coord.toString();
-        if(!nextStateMap.has(cstr) && !nextEmptyMap.has(cstr)) {
-            let newState = applyRules(prevStateMap, coord);
-            stateChange = prevStateMap.get(cstr) != newState;
-            updateCoord(cstr, coord, prevStateMap, nextStateMap, nextEmptyMap);
-        }
+        // if(!nextStateMap.has(cstr) && !nextEmptyMap.has(cstr)) {
+        let newState = applyRules(prevStateMap, coord);
+        stateChange = prevStateMap.get(cstr) != newState;
+        updateCoord(cstr, coord, prevStateMap, nextStateMap, nextEmptyMap);
+        // }
         //if the cell didn't change, we don't need to update the neighbors
         if(stateChange) {
             //look at neighbors
@@ -247,24 +295,48 @@ function step(prevStateMap) {
             if(!prevStateMap.has(cstr)) updateCoord(cstr, c, prevStateMap, nextStateMap, nextEmptyMap);
         }
     });
+    //finish calulating stats
+    scoringCategories.maxXDist = rightMost - leftMost;
+    scoringCategories.maxYDist = upMost - downMost;
+    let colSum = cols[0]+cols[1]+cols[2]+cols[3];
+    let colMax = Math.max(...cols);
+    scoringCategories.colorDominance = ((colMax / colSum) * 100) * (colSum/500); //percentage of most abundant color (scaled by # cells)
+    scoringCategories.colorBalance = 0-((colMax - (colSum/4)) - colSum); //i wish i knew what it meant
+    console.log(scoringCategories); // THIS IS A CONSOLE LOG
     return nextStateMap;
 }
 
 // void updateCoord(string coordStr, [number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
 function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) {
     if(!nextStateMap.has(coordStr) && !nextEmptyMap.has(coordStr)) {
+        let oldState = prevStateMap.get(coordStr); if(oldState == undefined) oldState = DEAD_STATE;
         let newState = applyRules(prevStateMap, coord);
         if(newState == DEAD_STATE) {
             nextEmptyMap.set(coordStr, DEAD_STATE);
         } else if(newState == NO_STATE_CHANGE || newState == PROTECTED) {
             // console.log(`no change for ${coordStr}`);
-            if(prevStateMap.get(coordStr) == DEAD_STATE) {
+            if(oldState == DEAD_STATE) {
                 nextEmptyMap.set(coordStr, DEAD_STATE);
             } else {
-                nextStateMap.set(coordStr, prevStateMap.get(coordStr));
+                nextStateMap.set(coordStr, oldState);
             }
         } else {
             nextStateMap.set(coordStr, newState);
+        }
+        // score
+        if(oldState == DEAD_STATE && newState != DEAD_STATE) {
+            scoringCategories.cellBorn += 1;
+        } else if(oldState != DEAD_STATE && newState == DEAD_STATE) {
+            scoringCategories.cellDies += 1;
+        } else if(oldState != DEAD_STATE && newState != DEAD_STATE) {
+            scoringCategories.cellAlive += 1;
+        }
+        if(newState != DEAD_STATE) {
+            leftMost = !(coord[0] > leftMost) ? coord[0] : leftMost;
+            rightMost = !(coord[0] < rightMost) ? coord[0] : rightMost;
+            downMost = !(coord[1] > downMost) ? coord[1] : downMost;
+            upMost = !(coord[1] < upMost) ? coord[1] : upMost;
+            cols[newState-1] += 1;
         }
     }
 }
