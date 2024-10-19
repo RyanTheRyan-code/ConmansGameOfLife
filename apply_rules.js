@@ -12,18 +12,51 @@ function step(prevStateMap) {
     let nextStateMap = new Map();
     let nextEmptyMap = new Map();
     prevStateMap.forEach((cellState, coord) => {
+        let stateChange = false;
         //we could've already looked at it from its alive neighbors
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[coord] = applyRules(prevStateMap, coord); }
-        //look at neighbors
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]-1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]-1, coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0], coord[1]-1]] = applyRules(prevStateMap, [coord[0], coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]+1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]+1, coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]-1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]-1, coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]-1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]-1, coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]-1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]-1, coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]-1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]-1, coord[1]-1]); }
-        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) { prevStateMap[[coord[0]-1, coord[1]-1]] = applyRules(prevStateMap, [coord[0]-1, coord[1]-1]); }
+        if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
+            let newState = applyRules(prevStateMap, coord); 
+            stateChange = prevStateMap[coord] == newState;
+            updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap);
+            // prevStateMap[coord] = newState;
+        }
+        //if the cell didn't change, we don't need to update the neighbors
+        if(stateChange) {
+            //look at neighbors
+            let c = [coord[0]-1, coord[1]-1];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            c = [coord[0], coord[1]-1];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            c = [coord[0]+1, coord[1]-1];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+
+            c = [coord[0]-1, coord[1]];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            c = [coord[0]+1, coord[1]];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+
+            c = [coord[0]-1, coord[1]+1];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            c = [coord[0], coord[1]+1];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+            c = [coord[0]+1, coord[1]+1];
+            updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
+        }
     });
+}
+
+// void updateCoord([number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
+function updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap) {
+    if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
+        let newState = applyRules(prevStateMap, coord);
+        if(newState == 0) {
+            nextEmptyMap[coord] = newState;
+        } else if(newState == -1) {
+            nextStateMap[coord] = prevStateMap[coord];
+        } else {
+            nextStateMap[coord] = newState;
+        }
+    }
 }
 
 // let rule1 = function(curStateMap, checkAtCoord) { 
