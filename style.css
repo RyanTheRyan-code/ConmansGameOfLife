@@ -3,13 +3,16 @@ body {
 }
 
 div {
+    width: 100%;
     display: flex;
+    justify-content: center;
 }
 
 #game {
     width: 80vh;
     height: 80vh;
     margin: auto;
+    
 }
 
 #board {
