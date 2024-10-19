@@ -8,7 +8,7 @@ let speed = 500;
 
 generateBoard();
 
-function generateBoard(width=16, height=16) {
+function generateBoard(width=64, height=64) {
     if(boardExists) document.getElementById("board").remove();
     boardExists = true;
 
@@ -41,9 +41,9 @@ function generateBoard(width=16, height=16) {
 function getAlive() { return alive_cells; }
 
 function randBoard() {
-    let rand = Math.floor(Math.random() * (15*15));
+    let rand = Math.floor(Math.random() * (board_width*board_height));
     for(let i = 0; i < rand; i++) {
-        setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.ceil(Math.random() * 4));
+        setStateWithPos(Math.floor(Math.random() * board_width),Math.floor(Math.random() * board_height),Math.ceil(Math.random() * 4));
     }
 }
 
