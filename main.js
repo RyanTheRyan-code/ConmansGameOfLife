@@ -43,7 +43,7 @@ function setStateWithElement(space, state) {
     setAnimationsForSetState(space, state);
 }
 function updateAliveCellsForSetState(coordStr, state) {
-    if(state == 0) {
+    if(state == DEAD_STATE) {
         alive_cells.delete(coordStr);
     } else {
         alive_cells.set(coordStr,state);
