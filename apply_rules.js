@@ -29,7 +29,7 @@ let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
 let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord)) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum == 2 || sum == 3) ? 0 : curStateMap.get(checkAtCoord);
+        return (sum == 2 || sum == 3) ? curStateMap.get(checkAtCoord) : 0;
     }
     return 0;
 }
