@@ -11,16 +11,92 @@ const DEAD_STATE = 0;
 // returns: number checkAtNewState
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) {
-    let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive];
+    // let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree];
     // let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree, fourToState2, oneToState2, threeS2ToState3];
+    let rules = [
+        [0, 2, 0, 1],
+        [1, 2, 2, 1],
+        [1, 3, 2, 1],
+        [0, 3, 4, 1],
+        [2, 3, 2, 1],
+    ]
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
-        let result = rule(curStateMap, checkAtCoord);
+        let result = max;
+        switch (rule[0]) {
+            case 0:
+                result = generalDead(rule[1], rule[2], rule[3], curStateMap, checkAtCoord);
+                break;
+            case 1:
+                result = generalStay(rule[1], rule[2], rule[3], curStateMap, checkAtCoord);
+                break;
+            case 2:
+                result = generalRepr(rule[1], rule[2], rule[3], curStateMap, checkAtCoord);
+                break;
+        }
+
         // console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
         max = (max > result) ? max : result;
     }
     return max;
 };
+
+let generalDead = function(numCells, comparison, neighborState, curStateMap, checkAtCoord) {
+    if (curStateMap.has(checkAtCoord.toString())) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, neighborState);
+        switch (comparison) {
+            case 0:
+                return (sum < numCells) ? DEAD_STATE : NO_STATE_CHANGE;
+            case 1:
+                return (sum <= numCells) ? DEAD_STATE : NO_STATE_CHANGE;
+            case 2:
+                return (sum == numCells) ? DEAD_STATE : NO_STATE_CHANGE;
+            case 3:
+                return (sum >= numCells) ? DEAD_STATE : NO_STATE_CHANGE;
+            case 4:
+                return (sum > numCells) ? DEAD_STATE : NO_STATE_CHANGE;
+        }
+    }
+    return DEAD_STATE;
+}
+
+let generalStay = function(numCells, comparison, neighborState, curStateMap, checkAtCoord) {
+    if (curStateMap.has(checkAtCoord.toString())) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, neighborState);
+        switch (comparison) {
+            case 0:
+                return (sum < numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+            case 1:
+                return (sum <= numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+            case 2:
+                return (sum == numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+            case 3:
+                return (sum >= numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+            case 4:
+                return (sum > numCells) ? NO_STATE_CHANGE : DEAD_STATE;
+        }
+    }
+    return DEAD_STATE;
+}
+
+let generalRepr = function(numCells, comparison, neighborState, babyState, curStateMap, checkAtCoord) {
+    if (!curStateMap.has(checkAtCoord.toString())) {
+        let sum = sumNeighbor(curStateMap, checkAtCoord, neighborState);
+        switch (comparison) {
+            case 0:
+                return (sum < numCells) ? babyState : DEAD_STATE;
+            case 1:
+                return (sum <= numCells) ? babyState : DEAD_STATE;
+            case 2:
+                return (sum == numCells) ? babyState : DEAD_STATE;
+            case 3:
+                return (sum >= numCells) ? babyState : DEAD_STATE;
+            case 4:
+                return (sum > numCells) ? babyState : DEAD_STATE;
+        }
+    }
+    return NO_STATE_CHANGE;
+}
 
 // number lessThanTwoAlive(Map, [number, number])
 let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
