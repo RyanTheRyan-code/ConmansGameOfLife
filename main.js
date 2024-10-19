@@ -6,12 +6,15 @@ let stepInterval;
 let activeStepInterval = false;
 let speed = 500;
 let genSpeed = 25;
-let satisfyingMode = false;
+let satisfyingMode = true;
 
 generateBoard();
 
 function generateBoard(width=16, height=16) {
-    if(boardExists) document.getElementById("board").remove();
+    if(boardExists) {
+        document.getElementById("board").remove();
+        document.getElementById("rulesContainer").remove();
+    }
     boardExists = true;
 
     board_height = height;
