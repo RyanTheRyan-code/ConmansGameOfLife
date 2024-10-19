@@ -9,6 +9,7 @@ function generateBoard(width=16, height=16) {
 
     board_height = height;
     board_width = width;
+    alive_cells = new Map(); // Map[x,y] = state
 
     let gameDiv = document.getElementById("game");
     let board = document.createElement("div");
