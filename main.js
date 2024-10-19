@@ -94,15 +94,17 @@ function setStateWithPos(x, y, state) { // pass virtual coords
 
 function setStateWithElement(space, state) {
     let coordOfStrs = space.id.split(',');
-    updateAliveCellsForSetState([parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)].toString(), state);
+    updateAliveCellsForSetState([(parseInt(coordOfStrs[0],10))+widthOffset, (parseInt(coordOfStrs[1],10))+heightOffset].toString(), state);
     setAnimationsForSetState(space, state);
 }
 
 function updateAliveCellsForSetState(coordStr, state) {
+    let coordOfStrs = coordStr.split(',');
+    let coordStrMod = [(parseInt(coordOfStrs[0],10))+widthOffset, (parseInt(coordOfStrs[1],10))+heightOffset].toString();
     if(state == DEAD_STATE) {
-        alive_cells.delete(coordStr);
+        alive_cells.delete(coordStrMod);
     } else {
-        alive_cells.set(coordStr,state);
+        alive_cells.set(coordStrMod,state);
     }
 }
 function setStateVisually(x, y, state) { // pass virtuall coords
