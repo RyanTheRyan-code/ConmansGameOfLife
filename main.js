@@ -1,11 +1,5 @@
 boardExists = false;
 
-function DoSomething(that) {
-    console.log("Wow");
-    console.log(that);
-    that.innerHTML =  ">.<";
-}
-
 function generateBoard(width=16, height=16) {
     if(boardExists) return;
     boardExists = true;
