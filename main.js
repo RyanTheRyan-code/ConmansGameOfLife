@@ -94,15 +94,17 @@ function setStateWithPos(x, y, state) { // pass virtual coords
     setAnimationsForSetState(space, state);
 }
 
+//takes a space == virtual coords
 function setStateWithElement(space, state) {
     let coordOfStrs = space.id.split(',');
     updateAliveCellsForSetState([(parseInt(coordOfStrs[0],10))+widthOffset, (parseInt(coordOfStrs[1],10))+heightOffset].toString(), state);
     setAnimationsForSetState(space, state);
 }
 
+//takes in real coords
 function updateAliveCellsForSetState(coordStr, state) {
     let coordOfStrs = coordStr.split(',');
-    let coordStrMod = [(parseInt(coordOfStrs[0],10))+widthOffset, (parseInt(coordOfStrs[1],10))+heightOffset].toString();
+    let coordStrMod = [(parseInt(coordOfStrs[0],10)), (parseInt(coordOfStrs[1],10))].toString();
     if(state == DEAD_STATE) {
         alive_cells.delete(coordStrMod);
     } else {
@@ -124,6 +126,7 @@ function setAnimationsForSetState(space, state, skipAnimation=false) {
     }, 150);
 }
 
+//takes real coords
 function getSpace(x, y) {
     return document.getElementById(`${x-widthOffset},${y-heightOffset}`);
 }
