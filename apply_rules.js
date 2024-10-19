@@ -50,6 +50,7 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 // number exactThree(Map, [number, number])
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
+        console.log("unalive");
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
         return (sum == 3) ? 1 : DEAD_STATE;
     }
@@ -82,8 +83,8 @@ function step(prevStateMap) {
         //we could've already looked at it from its alive neighbors
         let cstr = coord.toString();
         if(!nextStateMap.has(cstr) && !nextEmptyMap.has(cstr)) {
-            let newState = applyRules(prevStateMap, coord); 
-            stateChange = prevStateMap[cstr] == newState;
+            let newState = applyRules(prevStateMap, coord);
+            stateChange = prevStateMap.get(cstr) != newState;
             updateCoord(cstr, coord, prevStateMap, nextStateMap, nextEmptyMap);
             // prevStateMap[coord] = newState;
         }
