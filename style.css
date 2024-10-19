@@ -30,9 +30,13 @@ div {
 
 #rulesContainer {
     width: 60vh;
-    padding: 10%;
+    flex-direction: column;
 }
 #rules {
+    height: 32px;
+    align-items: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
     background-color: hsl(197, 20%, 73%);
     border: 8px solid hsl(var(--hue), var(--saturation), 25%);
     border-radius: 64px;
