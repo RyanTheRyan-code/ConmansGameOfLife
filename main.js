@@ -7,6 +7,9 @@ function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
     boardExists = true;
 
+    board_height = height;
+    board_width = width;
+
     let gameDiv = document.getElementById("game");
     let board = document.createElement("div");
     board.id = "board";
@@ -17,6 +20,7 @@ function generateBoard(width=16, height=16) {
             let space = document.createElement("div");
             space.className = "space state-0";
             space.id = `${i},${j}`;
+            // space.onclick = function() { setStateWithElement(this, Math.floor(Math.random() * 4)+1); };
             space.onclick = function() { setStateWithElement(this, 1); };
             line.append(space);
         }
@@ -29,7 +33,7 @@ function generateBoard(width=16, height=16) {
 function getAlive() { return alive_cells; }
 
 function setStateWithPos(x, y, state) {
-    updateAliveCellsForSetStace(x, y, state);
+    updateAliveCellsForSetState(x, y, state);
     
     space = getSpace(x, y);
     setAnimationsForSetState(space, state);
@@ -37,17 +41,19 @@ function setStateWithPos(x, y, state) {
 function setStateWithElement(space, state) {
     let x = parseInt(space.id.split(',')[0],10);
     let y = parseInt(space.id.split(',')[1],10);
-    updateAliveCellsForSetStace(x, y, state);
+    updateAliveCellsForSetState(x, y, state);
     setAnimationsForSetState(space, state);
 }
-function updateAliveCellsForSetStace(x, y, state) {
-    console.log(`${x}, ${y}`);
-    // console.log(y);
+function updateAliveCellsForSetState(x, y, state) {
     if(state == 0) {
         alive_cells.delete([x,y]);
     } else {
         alive_cells.set([x,y],state);
     }
+}
+function setStateVisually(x, y, state) {
+    let space = getSpace(x,y);
+    setAnimationsForSetState(space,state);
 }
 function setAnimationsForSetState(space, state) {
     space.classList.add("shrink");
@@ -74,17 +80,17 @@ function subtractMap(map) {
     map.forEach((value, coord) => {
         //coord[0] is x, coord[1] is y
         if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
-            setStateWithPos(coord[0],coord[1], 0);
+            setStateVisually(coord[0],coord[1], 0);
         }
     });
 }
 
-// void subtractMap(Map)
+// void addMap(Map)
 function addMap(map) {
     map.forEach((value, coord) => {
         //coord[0] is x, coord[1] is y
         if(coord[0] >= 0 && coord[0] < board_width && coord[1] >= 0 && coord[1] < board_height) {
-            setStateWithPos(coord[0],coord[1], 1);
+            setStateVisually(coord[0],coord[1], 1);
         }
     });
 }
@@ -92,11 +98,11 @@ function addMap(map) {
 function doStep() {
     console.log("Before:");
     console.log(alive_cells);
-    let new_alive_cells = step(alive_cells);
     subtractMap(alive_cells);
-    addMap(new_alive_cells);
+    let new_alive_cells = step(alive_cells);
+    // addMap(new_alive_cells);
     alive_cells = new_alive_cells;
     console.log("After:");
     console.log(alive_cells);
-    console.log(new_alive_cells);
+    console.log("____________");
 }
