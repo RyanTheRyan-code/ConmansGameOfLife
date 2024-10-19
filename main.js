@@ -32,6 +32,11 @@ function changeState(space) {
     space.style.background = getRandomColor();
 }
 
+function setState(x, y, state) {
+    space = getSpace(x, y);
+    space.className = state;
+}
+
 function getSpace(x, y) {
     return document.getElementById(`${x},${y}`);
 }
