@@ -57,7 +57,6 @@ function sumNeighbor(curStateMap, checkAtCoord, value) {
 
 //Map step(Map)
 function step(prevStateMap) {
-    console.log("step");
     let nextStateMap = new Map();
     let nextEmptyMap = new Map();
     prevStateMap.forEach((cellState, coord) => {
@@ -92,6 +91,7 @@ function step(prevStateMap) {
             updateCoord(c, prevStateMap, nextStateMap, nextEmptyMap);
         }
     });
+    return nextStateMap;
 }
 
 // void updateCoord([number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
