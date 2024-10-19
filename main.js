@@ -41,7 +41,7 @@ function getAlive() { return alive_cells; }
 function randBoard() {
     let rand = Math.floor(Math.random() * (15*15));
     for(let i = 0; i < rand; i++) {
-        setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),1);
+        setStateWithPos(Math.floor(Math.random() * 16),Math.floor(Math.random() * 16),Math.ceil(Math.random() * 4));
     }
 }
 
