@@ -1,5 +1,5 @@
-const NO_STATE_CHANGE = 0;
-const DEAD_STATE = -1;
+const NO_STATE_CHANGE = -1;
+const DEAD_STATE = 0;
 
 // Any variables with `Map` at the end, are maps.
 // Any variables with `Coord` at the end, are [x,y] arrays.
@@ -10,7 +10,7 @@ const DEAD_STATE = -1;
 // params:  Map curStateMap, [number, number] checkAtCoord
 let applyRules = function(curStateMap, checkAtCoord) {
     let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree];
-    let max = DEAD_STATE;
+    let max = NO_STATE_CHANGE;
     for(let rule of rules) {
         let result = rule(curStateMap, checkAtCoord);
         console.log(`checking rule at ${checkAtCoord}, gets result ${result}`);
@@ -53,7 +53,7 @@ let exactThree = function (curStateMap, checkAtCoord) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
         return (sum == 3) ? 1 : DEAD_STATE;
     }
-    return NO_DECISION;
+    return NO_STATE_CHANGE;
 }
 
 // number sumNeighbor(Map, [number, number], number)
