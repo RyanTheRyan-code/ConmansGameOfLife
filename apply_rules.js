@@ -14,24 +14,28 @@ let applyRules = function(curStateMap, checkAtCoord) {
     // let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree];
     // let rules = [lessThanTwoAlive, twoOrThreeAlive, moreThanThreeAlive, exactThree, fourToState2, oneToState2, threeS2ToState3];
     let rules = [
-        [0, 2, 0, 1],
-        [1, 2, 2, 1],
-        [1, 3, 2, 1],
-        [0, 3, 4, 1],
-        [2, 3, 2, 1],
+        {type: 0, numCells: 2, comparison: 0, neighborState: 1},
+        // {type: 1, numCells: 2, comparison: 2, neighborState: 1},
+        // {type: 1, numCells: 3, comparison: 2, neighborState: 1},
+        // {type: 0, numCells: 3, comparison: 4, neighborState: 1},
+        // {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1}
     ]
     let max = NO_STATE_CHANGE;
     for(let rule of rules) {
+        // console.log(`${rule[0]}`)
         let result = max;
-        switch (rule[0]) {
+        switch (rule.type) {
             case 0:
-                result = generalDead(rule[1], rule[2], rule[3], curStateMap, checkAtCoord);
+                result = generalDead(rule.numCells, rule.comparison, rule.neighborState, curStateMap, checkAtCoord);
+                // console.log(`gendead on coord: ${checkAtCoord} and result: ${result}`);
                 break;
             case 1:
-                result = generalStay(rule[1], rule[2], rule[3], curStateMap, checkAtCoord);
+                result = generalStay(rule.numCells, rule.comparison, rule.neighborState, curStateMap, checkAtCoord);
+                // console.log(`genstay and result: ${result}`);
                 break;
             case 2:
-                result = generalRepr(rule[1], rule[2], rule[3], curStateMap, checkAtCoord);
+                result = generalRepr(rule.numCells, rule.comparison, rule.neighborState, rule.babyState, curStateMap, checkAtCoord);
+                // console.log(`genrepr and result: ${result}`);
                 break;
         }
 
