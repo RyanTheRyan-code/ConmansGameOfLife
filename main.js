@@ -3,6 +3,8 @@ let board_height;
 let board_width;
 let alive_cells = new Map(); // Map[x,y] = state
 let stepInterval;
+let activeStepInterval = false;
+let speed = 500;
 
 function generateBoard(width=16, height=16) {
     if(boardExists) document.getElementById("board").remove();
@@ -11,7 +13,8 @@ function generateBoard(width=16, height=16) {
     board_height = height;
     board_width = width;
     alive_cells = new Map(); // Map[x,y] = state
-    clearInterval(stepInterval);
+    
+    stopSteps();
 
     let gameDiv = document.getElementById("game");
     let board = document.createElement("div");
@@ -131,10 +134,35 @@ function startSteps() {
     document.getElementById("stopButton").style.display = "flex";
     clearInterval(stepInterval);
     doStep();
-    stepInterval = setInterval(() => { doStep() }, 500);
+    stepInterval = setInterval(() => { doStep() }, speed);
+    activeStepInterval = true;
 }
 function stopSteps() {
     document.getElementById("stopButton").style.display = "none";
     document.getElementById("goButton").style.display = "flex";
     clearInterval(stepInterval);
+    activeStepInterval = false;
+}
+
+function toggleTurbo() {
+    if(speed === 500) {
+        speed = 100;
+        document.getElementById("turboButton").style.filter = "brightness(125%) hue-rotate(-45deg)";
+        if(activeStepInterval) startSteps();
+    }
+    else if(speed === 100) {
+        speed = 50;
+        document.getElementById("turboButton").style.filter = "brightness(125%) hue-rotate(-120deg)";
+        if(activeStepInterval) startSteps();
+    }
+    else if(speed === 50) {
+        speed = 10;
+        document.getElementById("turboButton").style.filter = "brightness(125%) hue-rotate(-180deg)";
+        if(activeStepInterval) startSteps();
+    }
+    else {
+        speed = 500;
+        document.getElementById("turboButton").style.filter = "brightness(100%) hue-rotate(0)";
+        if(activeStepInterval) startSteps();
+    }
 }
