@@ -6,7 +6,7 @@ let stepInterval;
 let activeStepInterval = false;
 let speed = 500;
 let genSpeed = 25;
-let satisfyingMode = true;
+let satisfyingMode = false;
 
 generateBoard();
 
@@ -32,7 +32,7 @@ function generateBoard(width=16, height=16) {
         for (let j = 0; j < height; j++) {
             let space = document.createElement("div");
             space.id = `${j},${i}`;
-            space.onclick = function() { setStateWithElement(this, 1); };
+            space.onclick = function() { setStateWithElement(this, (Number(space.className.split("state-")[1]) + 1) % 5); };
             line.append(space);
             setTimeout(function () {
                 space.className = "space pop-out state-0";
