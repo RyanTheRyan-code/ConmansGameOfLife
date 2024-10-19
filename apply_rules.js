@@ -19,6 +19,15 @@ function resetRules() {
         {type: 2, numCells: 3, comparison: 2, neighborState: 1, babyState: 1},
     ];
     console.log(currentRules);
+
+    let rulesContainer = document.getElementById("rulesContainer");
+    for(let rule of currentRules) {
+        let rulesBox = document.createElement("div");
+        rulesBox.id = "rules";
+        let content = document.createTextNode(ruleParser(rule));
+        rulesBox.append(content);
+        rulesContainer.append(rulesBox);
+    }
 }
 
 function addRandRule() {
@@ -284,7 +293,7 @@ function ruleParser(rule) {
     else if(rule.comparison == 3) str += "at least ";
     else if(rule.comparison == 4) str += "more than ";
     
-    str += rule.numCells;
+    str += rule.numCells + " ";
 
     if(rule.neighborState == 1) str += "yellow ";
     else if(rule.neighborState == 2) str += "pink ";
