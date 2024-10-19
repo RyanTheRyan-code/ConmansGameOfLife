@@ -1,12 +1,12 @@
 boardExists = false;
 
 function generateBoard(width=16, height=16) {
-    if(boardExists) return;
+    if(boardExists) document.getElementById("board").remove();
     boardExists = true;
 
     gameDiv = document.getElementById("game");
     board = document.createElement("div");
-    board.className = "board";
+    board.id = "board";
     for(i = 0; i < width; i++) {
         line = document.createElement("div");
         line.className = "line";
