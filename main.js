@@ -1,8 +1,8 @@
 let boardExists = false;
 let board_height;
-let board_height_min;
+let heightOffset;
 let board_width;
-let board_width_min;
+let widthOffset;
 let alive_cells = new Map(); // Map[x,y] = state
 let stepInterval;
 let activeStepInterval = false;
@@ -21,9 +21,9 @@ function generateBoard(width=16, height=16) {
     boardExists = true;
     
     board_height = height;
-    board_height_min = 0;
+    heightOffset = 0;
     board_width = width;
-    board_width_min = 0;
+    widthOffset = 0;
     alive_cells = new Map(); // Map[x,y] = state
     
     stopSteps();
@@ -68,21 +68,24 @@ function getAlive() { return alive_cells; }
 function randBoard() {
     let rand = Math.floor(Math.random() * (board_width*board_height));
     for(let i = 0; i < rand; i++) {
-        setStateWithPos((Math.floor(Math.random() * board_width))-board_width_min,(Math.floor(Math.random() * board_height))-board_width_min,Math.ceil(Math.random() * 4));
+        setStateWithPos((Math.floor(Math.random() * (board_width-widthOffset))),(Math.floor(Math.random() * (board_height-widthOffset))),Math.ceil(Math.random() * 4));
     }
     if(activeStepInterval) startSteps();
 }
 
-function setStateWithPos(x, y, state) {
-    updateAliveCellsForSetState([x, y].toString(), state);
-    
+function setStateWithPos(x, y, state) { // pass virtual coords
+    updateAliveCellsForSetState([x+widthOffset, y+heightOffset].toString(), state);
+    console.log();
     space = getSpace(x, y);
     setAnimationsForSetState(space, state);
 }
+
 function setStateWithElement(space, state) {
-    updateAliveCellsForSetState(space.id, state);
+    let coordOfStrs = space.id.split(',');
+    updateAliveCellsForSetState([parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)].toString(), state);
     setAnimationsForSetState(space, state);
 }
+
 function updateAliveCellsForSetState(coordStr, state) {
     if(state == DEAD_STATE) {
         alive_cells.delete(coordStr);
@@ -90,7 +93,7 @@ function updateAliveCellsForSetState(coordStr, state) {
         alive_cells.set(coordStr,state);
     }
 }
-function setStateVisually(x, y, state) {
+function setStateVisually(x, y, state) { // pass virtuall coords
     let space = getSpace(x,y);
     setAnimationsForSetState(space,state);
 }
@@ -116,10 +119,8 @@ function getRandomColor() {
 
 function moveBoard(x, y) {
     subtractMap(alive_cells);
-    board_width_min += x;
-    board_width += x;
-    board_height_min += y;
-    board_height += y;
+    widthOffset += x;
+    heightOffset += y;
     addMap(alive_cells);
 }
 
@@ -129,8 +130,8 @@ function subtractMap(map) {
         //coord[0] is x, coord[1] is y
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
-        if(coord[0] >= board_width_min && coord[0] < board_width && coord[1] >= board_height_min && coord[1] < board_height) {
-            setStateVisually(coord[0]-board_width_min,coord[1]-board_height_min, 0);
+        if(coord[0] >= widthOffset && coord[0] < board_width+widthOffset && coord[1] >= heightOffset && coord[1] < board_height+heightOffset) {
+            setStateVisually(coord[0]-widthOffset,coord[1]-heightOffset, 0);
         }
     });
 }
@@ -141,8 +142,8 @@ function addMap(map) {
         //coord[0] is x, coord[1] is y
         let coordOfStrs = coordStrOriginal.split(',');
         let coord = [parseInt(coordOfStrs[0],10), parseInt(coordOfStrs[1],10)];
-        if(coord[0] >= board_width_min && coord[0] < board_width && coord[1] >= board_height_min && coord[1] < board_height && value != getSpace(coord[0], coord[1]).className.split("state-")[1]) {
-            setStateVisually(coord[0]-board_width_min,coord[1]-board_height_min, value);
+        if(coord[0] >= widthOffset && coord[0] < board_width+widthOffset && coord[1] >= heightOffset && coord[1] < board_height+heightOffset && value != getSpace(coord[0], coord[1]).className.split("state-")[1]) {
+            setStateVisually(coord[0]-widthOffset,coord[1]-heightOffset, value);
         }
     });
 }
