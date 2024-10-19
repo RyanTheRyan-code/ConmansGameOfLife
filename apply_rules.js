@@ -1,6 +1,6 @@
 // Any variables with `Map` at the end, are maps.
 // Any variables with `Coord` at the end, are [x,y] arrays.
-// ANy variables with `State` at the end, are numbers, representing the states of a cell.
+// Any variables with `State` at the end, are numbers, representing the states of a cell.
 
 // applyRules should be a function pointer such that:
 // returns: number checkAtNewState
