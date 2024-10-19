@@ -17,6 +17,7 @@ function twoAliveNeighbors(curStateMap, checkAtCoord) {
         (curStateMap.has([checkAtCoord[0]-1, checkAtCoord[1]+1]) && curStateMap([checkAtCoord[0]-1, checkAtCoord[1]+1]) == 1) +
         (curStateMap.has([checkAtCoord[0], checkAtCoord[1]+1]) && curStateMap([checkAtCoord[0], checkAtCoord[1]+1]) == 1) +
         (curStateMap.has([checkAtCoord[0]+1, checkAtCoord[1]+1]) && curStateMap([checkAtCoord[0]+1, checkAtCoord[1]+1]) == 1);
+        
     }
     return false;
 }
