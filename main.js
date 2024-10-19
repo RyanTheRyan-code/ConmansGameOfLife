@@ -9,9 +9,10 @@ let activeStepInterval = false;
 let speed = 500;
 let genSpeed = 25;
 let satisfyingMode = false;
+let points;
+let activeScoringCategories = []; //list of {category: String, mult: number}
 
 generateBoard();
-
 
 function generateBoard(width=16, height=16) {
     if(boardExists) {
@@ -25,6 +26,7 @@ function generateBoard(width=16, height=16) {
     board_width = width;
     widthOffset = 0;
     alive_cells = new Map(); // Map[x,y] = state
+    points = 0;
     
     stopSteps();
     
@@ -162,6 +164,7 @@ function addMap(map) {
     });
 }
 
+//call once to make a step
 function doStep() {
     // console.log("Before:");
     // console.log(alive_cells);
@@ -177,9 +180,67 @@ function doStep() {
             startSteps(); 
         }, speed);
     }
+    scorePoints();
+    assignNewScoringCategories();
     // console.log("After:");
     // console.log(alive_cells);
     // console.log("____________");
+}
+
+//call after a step; score appropriate points
+function scorePoints() {
+    for(let cat of activeScoringCategories) {
+        switch(cat.category) {
+            case "cellBorn": 
+                points += scoringCategories.cellBorn * cat.mult;
+                break;
+            case "cellDies":
+                points += scoringCategories.cellDies * cat.mult;
+                break;
+            case "cellAlive":
+                points += scoringCategories.cellAlive * cat.mult;
+                break;
+            case "maxYDist":
+                points += scoringCategories.maxYDist * cat.mult;
+                break;
+            case "maxXDist":
+                points += scoringCategories.maxXDist * cat.mult;
+                break;
+            case "colorBalance":
+                points += scoringCategories.colorBalance * cat.mult;
+                break;
+            case "colorDominance":
+                points += scoringCategories.colorDominance * cat.mult;
+                break;
+            default: break;
+        }
+    }
+    console.log("cats:");
+    console.log(activeScoringCategories);
+    console.log("points:");
+    console.log(points);
+    console.log("_______________________");
+}
+
+//call once between two steps to choose new scoring categories
+function assignNewScoringCategories() {
+    activeScoringCategories = [];
+
+    let cat1 = Math.floor(Math.random() * 7);
+    let cat2 = cat1; while(cat1 == cat2) { cat2 = Math.floor(Math.random() * 7); }
+    let cat3 = cat1; while(cat3 == cat1 || cat3 == cat2) { cat3 = Math.floor(Math.random() * 7); }
+
+    let range = allScoringCategoryMultiplyers[cat1];
+    let mult = Math.floor(Math.random() * (range[1]-range[0]))+range[0];
+    activeScoringCategories.push({category: allScoringCategories[cat1], mult: mult});
+    
+    range = allScoringCategoryMultiplyers[cat2];
+    mult = Math.floor(Math.random() * (range[1]-range[0]))+range[0];
+    activeScoringCategories.push({category: allScoringCategories[cat2], mult: mult});
+    
+    range = allScoringCategoryMultiplyers[cat3];
+    mult = Math.floor(Math.random() * (range[1]-range[0]))+range[0];
+    activeScoringCategories.push({category: allScoringCategories[cat3], mult: mult});
 }
 
 function mapDifference(map1, map2) {
