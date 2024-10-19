@@ -49,6 +49,7 @@ function generateBoard(width=16, height=16) {
     rulesPage.id = "rulesContainer";
     gameDiv.append(board);
     gameDiv.append(rulesPage);
+
     let rules = document.createElement("div");
     rules.id = "rules";
     rulesPage.append(rules);
@@ -56,6 +57,17 @@ function generateBoard(width=16, height=16) {
     rulesTitle.innerHTML = "Rules";
     rules.append(rulesTitle);
     resetRules();
+
+    for(let i = 0; i < 4; i++) {
+        let arrow = document.createElement("div");
+        arrow.className = "arrow";
+        if(i == 0) arrow.onclick = function() { moveBoard(1, 0); };
+        if(i == 1) arrow.onclick = function() { moveBoard(-1, 0); };
+        if(i == 2) arrow.onclick = function() { moveBoard(0, -1); };
+        if(i == 3) arrow.onclick = function() { moveBoard(0, 1); };
+        board.append(arrow);
+    }
+
     console.log("finished generating board");
 }
 
