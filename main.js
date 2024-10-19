@@ -40,11 +40,11 @@ function generateBoard(width=16, height=16) {
         }
         board.append(line);
     }
-    resetRules();
     let rulesPage = document.createElement("div");
     rulesPage.id = "rulesContainer";
     gameDiv.append(board);
     gameDiv.append(rulesPage);
+    resetRules();
     console.log("finished generating board");
 }
 
