@@ -100,7 +100,7 @@ function randBoard() {
 
 function setStateWithPos(x, y, state) { // pass virtual coords
     updateAliveCellsForSetState([x+widthOffset, y+heightOffset].toString(), state);
-    console.log();
+    // console.log();
     space = getSpace(x, y);
     setAnimationsForSetState(space, state);
 }
@@ -242,11 +242,11 @@ function scorePoints() {
             default: break;
         }
     }
-    console.log("cats:");
-    console.log(activeScoringCategories);
-    console.log("points:");
-    console.log(points);
-    console.log("_______________________");
+    // console.log("cats:");
+    // console.log(activeScoringCategories);
+    // console.log("points:");
+    // console.log(points);
+    // console.log("_______________________");
 }
 
 //call once between two steps to choose new scoring categories

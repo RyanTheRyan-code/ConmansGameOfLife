@@ -28,6 +28,42 @@ function resetRules() {
     }
 }
 
+function genRandRule() {
+    let type = Math.floor(Math.random()*4);
+    switch(type) {
+        case 0:
+        case 1:
+            return ({
+                type: type,
+                numCells: Math.floor(Math.random()*9),
+                comparison: Math.floor(Math.random()*5),
+                neighborState: Math.ceil(Math.random()*4),
+            });
+        case 2:
+            return ({
+                type: type,
+                numCells: Math.floor(Math.random()*9),
+                comparison: Math.floor(Math.random()*5),
+                neighborState: Math.ceil(Math.random()*4),
+                babyState: Math.ceil(Math.random()*4),
+            });
+        case 3:
+            return ({
+                type: type,
+                numCells: Math.floor(Math.random()*9),
+                comparison: Math.floor(Math.random()*5),
+                neighborState: Math.ceil(Math.random()*4),
+                myState: Math.ceil(Math.random()*4),
+                babyState: Math.ceil(Math.random()*4),
+            });
+        
+    }
+}
+
+function addRule(newRule) {
+    currentRules.append(newRule);
+}
+
 function addRandRule() {
     let type = Math.floor(Math.random()*4);
     switch(type) {
@@ -61,7 +97,7 @@ function addRandRule() {
             break;
         
     }
-    console.log(ruleParser(currentRules[currentRules.length-1]));
+    // console.log(ruleParser(currentRules[currentRules.length-1]));
     
     let rulesContainer = document.getElementById("rules");
     let content = document.createTextNode(`${currentRules.length}. ` + ruleParser(currentRules[currentRules.length - 1]));
@@ -309,17 +345,14 @@ function step(prevStateMap) {
 // void updateCoord(string coordStr, [number,number] coord, Map prevStateMap, Map nextStateMap, Map nextEmptyMap)
 function updateCoord(coordStr, coord, prevStateMap, nextStateMap, nextEmptyMap) {
     if(!nextStateMap.has(coordStr) && !nextEmptyMap.has(coordStr)) {
-        let oldState = prevStateMap.get(coordStr); if(oldState == undefined) oldState = DEAD_STATE;
+        let oldState = prevStateMap.get(coordStr); 
+        if(oldState == undefined) oldState = DEAD_STATE;
+        
         let newState = applyRules(prevStateMap, coord);
+        if(newState == PROTECTED || newState == NO_STATE_CHANGE) newState = oldState;
+        
         if(newState == DEAD_STATE) {
             nextEmptyMap.set(coordStr, DEAD_STATE);
-        } else if(newState == NO_STATE_CHANGE || newState == PROTECTED) {
-            // console.log(`no change for ${coordStr}`);
-            if(oldState == DEAD_STATE) {
-                nextEmptyMap.set(coordStr, DEAD_STATE);
-            } else {
-                nextStateMap.set(coordStr, oldState);
-            }
         } else {
             nextStateMap.set(coordStr, newState);
         }
