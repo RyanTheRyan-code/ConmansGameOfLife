@@ -21,7 +21,7 @@ let applyRules = function(curStateMap, checkAtCoord) {
 let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum < 2) ? 0 : curStateMap.get(checkAtCoord.toString());
+        return (sum < 2) ? 0 : -1;
     }
     return 0;
 }
@@ -31,7 +31,7 @@ let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
         // console.log(`two or three sum neighbors: ${sum}`);
-        return (sum == 2 || sum == 3) ? curStateMap.get(checkAtCoord.toString()) : 0;
+        return (sum == 2 || sum == 3) ? -1 : 0;
     }
     return 0;
 }
@@ -40,7 +40,7 @@ let twoOrThreeAlive = function (curStateMap, checkAtCoord) {
 let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
     if (curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum > 3) ? 0 : curStateMap.get(checkAtCoord.toString());
+        return (sum > 3) ? 0 : -1;
     }
     return 0;
 }
@@ -49,9 +49,9 @@ let moreThanThreeAlive = function (curStateMap, checkAtCoord) {
 let exactThree = function (curStateMap, checkAtCoord) {
     if (!curStateMap.has(checkAtCoord.toString())) {
         let sum = sumNeighbor(curStateMap, checkAtCoord, 1);
-        return (sum == 3) ? 1 : curStateMap.get(checkAtCoord.toString());
+        return (sum == 3) ? 1 : -1;
     }
-    return curStateMap[checkAtCoord];
+    return -1;
 }
 
 // number sumNeighbor(Map, [number, number], number)
