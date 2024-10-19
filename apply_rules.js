@@ -1,6 +1,8 @@
 const NO_STATE_CHANGE = -1;
 const DEAD_STATE = 0;
 
+
+
 // Any variables with `Map` at the end, are maps.
 // Any variables with `Coord` at the end, are [x,y] arrays.
 // Any variables with `State` at the end, are numbers, representing the states of a cell.
@@ -86,7 +88,6 @@ function step(prevStateMap) {
             let newState = applyRules(prevStateMap, coord);
             stateChange = prevStateMap.get(cstr) != newState;
             updateCoord(cstr, coord, prevStateMap, nextStateMap, nextEmptyMap);
-            // prevStateMap[coord] = newState;
         }
         //if the cell didn't change, we don't need to update the neighbors
         if(stateChange) {
