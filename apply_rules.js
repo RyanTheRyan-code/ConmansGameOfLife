@@ -28,6 +28,42 @@ function resetRules() {
     }
 }
 
+function genRandRule() {
+    let type = Math.floor(Math.random()*4);
+    switch(type) {
+        case 0:
+        case 1:
+            return ({
+                type: type,
+                numCells: Math.floor(Math.random()*9),
+                comparison: Math.floor(Math.random()*5),
+                neighborState: Math.ceil(Math.random()*4),
+            });
+        case 2:
+            return ({
+                type: type,
+                numCells: Math.floor(Math.random()*9),
+                comparison: Math.floor(Math.random()*5),
+                neighborState: Math.ceil(Math.random()*4),
+                babyState: Math.ceil(Math.random()*4),
+            });
+        case 3:
+            return ({
+                type: type,
+                numCells: Math.floor(Math.random()*9),
+                comparison: Math.floor(Math.random()*5),
+                neighborState: Math.ceil(Math.random()*4),
+                myState: Math.ceil(Math.random()*4),
+                babyState: Math.ceil(Math.random()*4),
+            });
+        
+    }
+}
+
+function addRule(newRule) {
+    currentRules.append(newRule);
+}
+
 function addRandRule() {
     let type = Math.floor(Math.random()*4);
     switch(type) {
