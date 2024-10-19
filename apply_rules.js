@@ -254,8 +254,27 @@ function ruleParser(rule) {
 
     if(rule.type == 0) str += "die ";
     else if(rule.type == 1) str += "stay alive ";
-    else if(rule.type == 2) str += "be born ";
-    else if(rule.type == 3) str += "evolve ";
+    else if(rule.type == 2) {
+        str += "be born as a ";
+        if(rule.babyState == 1) str += "yellow ";
+        else if(rule.babyState == 2) str += "pink ";
+        else if(rule.babyState == 3) str += "green ";
+        else if(rule.babyState == 4) str += "blue ";
+        str += "cell ";
+    }
+    else if(rule.type == 3) {
+        str += "evolve from a ";
+        if(rule.myState == 1) str += "yellow ";
+        else if(rule.myState == 2) str += "pink ";
+        else if(rule.myState == 3) str += "green ";
+        else if(rule.myState == 4) str += "blue ";
+        str += "cell into a ";
+        if(rule.babyState == 1) str += "yellow ";
+        else if(rule.babyState == 2) str += "pink ";
+        else if(rule.babyState == 3) str += "green ";
+        else if(rule.babyState == 4) str += "blue ";
+        str += "cell ";
+    }
     
     str += "if it neighbors "
 
@@ -267,12 +286,12 @@ function ruleParser(rule) {
     
     str += rule.numCells;
 
-    if(rule[neighborState] == 1) str += "yellow ";
-    else if(rule[neighborState] == 2) str += "pink ";
-    else if(rule[neighborState] == 3) str += "green ";
-    else if(rule[neighborState] == 4) str += "blue ";
+    if(rule.neighborState == 1) str += "yellow ";
+    else if(rule.neighborState == 2) str += "pink ";
+    else if(rule.neighborState == 3) str += "green ";
+    else if(rule.neighborState == 4) str += "blue ";
 
-    str += "neighbors.";
+    str += "cells.";
 
     return str;
 }
