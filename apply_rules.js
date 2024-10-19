@@ -5,7 +5,14 @@
 // applyRules should be a function pointer such that:
 // returns: number checkAtNewState
 // params:  Map curStateMap, [number, number] checkAtCoord
-let applyRules = function(curStateMap, checkAtCoord) { return 1; };
+let applyRules = function(curStateMap, checkAtCoord) {
+    let rules = [lessThanTwoAlive, twoOrThreeAlive];
+    let m = 0;
+    for(r in rules) {
+        m = max(m, r(curStateMap, checkAtCoord));
+    }
+    return m;
+};
 
 // number lessThanTwoAlive(Map, [number, number])
 let lessThanTwoAlive = function (curStateMap, checkAtCoord) {
@@ -98,6 +105,7 @@ function step(prevStateMap) {
 function updateCoord(coord, prevStateMap, nextStateMap, nextEmptyMap) {
     if(!nextStateMap.has(coord) && !nextEmptyMap.has(coord)) {
         let newState = applyRules(prevStateMap, coord);
+        console.log(newState);
         if(newState == 0) {
             nextEmptyMap[coord] = newState;
         } else if(newState == -1) {
