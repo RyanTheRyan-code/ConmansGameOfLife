@@ -52,6 +52,13 @@ function generateBoard(width=16, height=16) {
     gameDiv.append(board);
     gameDiv.append(rulesPage);
 
+    let score = document.createElement("div");
+    score.id = "score";
+    rulesPage.append(score);
+    let scoreTitle = document.createElement("h1");
+    scoreTitle.innerHTML = "Score: 0";
+    score.append(scoreTitle);
+
     let rules = document.createElement("div");
     rules.id = "rules";
     rulesPage.append(rules);
