@@ -1,9 +1,14 @@
+boardExists = false;
+
 function DoSomething(that) {
     console.log("Wow");
     that.innerHTML =  ">.<";
 }
 
 function generateBoard(width=16, height=16) {
+    if(boardExists) return;
+    boardExists = true;
+    
     gameDiv = document.getElementById("game");
     board = document.createElement("div");
     board.className = "board";
