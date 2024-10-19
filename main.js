@@ -71,3 +71,10 @@ function addMap(map) {
         }
     });
 }
+
+function doStep() {
+    let new_alive_cells = step(alive_cells);
+    subtractMap(alive_cells);
+    addMap(new_alive_cells);
+    alive_cells = new_alive_cells;
+}
