@@ -28,6 +28,10 @@ function changeState(space) {
     space.style.background = getRandomColor();
 }
 
+function step() {
+    
+}
+
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
